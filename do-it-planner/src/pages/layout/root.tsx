@@ -9,8 +9,8 @@ const Root = () => {
   console.log(user);
   const createUser = async () => {
     const userData = {
-      name: user.name,
-      email: user.email,
+      name: user?.name,
+      email: user?.email,
       id: Date.now(),
     };
     console.log('userData:', userData);

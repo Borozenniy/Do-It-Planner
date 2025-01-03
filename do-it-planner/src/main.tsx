@@ -1,8 +1,8 @@
 import { StrictMode } from 'react';
-import { Outlet, BrowserRouter, Routes, Route } from 'react-router';
+import { BrowserRouter, Routes, Route } from 'react-router';
 import { createRoot } from 'react-dom/client';
 import { Auth0Provider } from '@auth0/auth0-react';
-import App from './App.tsx';
+//import App from './App.tsx';
 import Dashboard from './pages/dashboard';
 import GoalsDashboard from './pages/goals-dashboard.tsx';
 import { Login } from './auth/login.tsx';

@@ -1,4 +1,4 @@
-export const getGoals = async (user) => {
+export const getGoals = async (user: unknown) => {
   try {
     const response = await fetch(
       `https://test-vercel-chi-three.vercel.app/goals/get-goals?email=${user?.email}`,
@@ -14,11 +14,15 @@ export const getGoals = async (user) => {
     console.log('Goals:', data);
     return data;
   } catch (error) {
-    console.error('Помилка:', error.message);
+    if (error instanceof Error) {
+      console.error('Помилка:', error.message);
+    } else {
+      console.error('Unexpected error:', error);
+    }
   }
 };
 
-export const createGoal = async (goal) => {
+export const createGoal = async (goal: unknown) => {
   try {
     const response = await fetch(
       'https://test-vercel-chi-three.vercel.app/goals/create-goal',
@@ -35,7 +39,11 @@ export const createGoal = async (goal) => {
     const data = await response.json();
     console.log('Goal created:', data);
   } catch (error) {
-    console.error('Помилка:', error.message);
+    if (error instanceof Error) {
+      console.error('Помилка:', error.message);
+    } else {
+      console.error('Unexpected error:', error);
+    }
   }
 };
 

@@ -15,13 +15,16 @@ const Root = () => {
     };
     console.log('userData:', userData);
     try {
-      const response = await fetch('http://localhost:3000/users/create-user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
+      const response = await fetch(
+        'https://test-vercel-chi-three.vercel.app/users/create-user',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
+        }
+      );
 
       //if (!response.ok) {
       //  throw new Error('Помилка створення користувача');

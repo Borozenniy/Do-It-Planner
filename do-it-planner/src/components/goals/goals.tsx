@@ -48,7 +48,11 @@ const Goals = () => {
       const goalsData = await getGoals(user);
       setGoals(goalsData);
     } catch (error) {
-      console.error('Помилка:', error.message);
+      if (error instanceof Error) {
+        console.error('Помилка:', error.message);
+      } else {
+        console.error('Unexpected error:', error);
+      }
     }
   };
 

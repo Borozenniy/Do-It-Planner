@@ -4,7 +4,10 @@ import { Goal } from '../components/goals/goal/goal';
 import { getGoals } from '../services/utils/user';
 import '../styles/dashboard.scss';
 
-type Goal = [];
+type Goal = {
+  id: number;
+  name: string;
+};
 
 const Dashboard = () => {
   const { user } = useAuth0();
@@ -20,6 +23,7 @@ const Dashboard = () => {
       fetchGoals();
     }
   }, [user]);
+
   return (
     <div className='dashboard'>
       <div>DashBoard</div>

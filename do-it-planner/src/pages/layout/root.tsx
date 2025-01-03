@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Outlet } from 'react-router';
 import { Sidebar } from './sidebar/sidebar';
-import Dashboard from '../dashboard';
+//import Dashboard from '../dashboard';
 
 const Root = () => {
   const { user } = useAuth0();
@@ -30,7 +30,11 @@ const Root = () => {
       const data = await response.json();
       console.log('Користувач створений:', data);
     } catch (error) {
-      console.error('Помилка:', error.message);
+      if (error instanceof Error) {
+        console.error('Помилка:', error.message);
+      } else {
+        console.error('Unexpected error:', error);
+      }
     }
   };
   //const createUser = async () => {

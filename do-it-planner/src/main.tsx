@@ -43,7 +43,7 @@ createRoot(document.getElementById('root')!).render(
       </BrowserRouter>
     </Auth0Provider>*/}
     <Auth0ProviderLayour>
-      <BrowserRouter>
+      <BrowserRouter basename='/'>
         <Routes>
           <Route path='*' element={<Login />} />
           <Route path='/' element={<Login />} />

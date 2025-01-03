@@ -1,0 +1,17 @@
+.navigation {
+  position: fixed;
+  height: 100%;
+  margin: 0px 0px 0px -10px;
+  /* left: 0; */
+  background-color: blue;
+  border-radius: 12px;
+  padding: 20px;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px;
+  }
+}

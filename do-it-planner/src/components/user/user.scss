@@ -1,0 +1,16 @@
+.user {
+  display: flex;
+  align-items: center;
+  &__name {
+    font-size: 24px;
+  }
+
+  &__avatar {
+    margin-left: 10px;
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+  }
+}

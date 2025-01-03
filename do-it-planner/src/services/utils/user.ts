@@ -1,4 +1,4 @@
-export const getGoals = async (user: { email: string }) => {
+export const getGoals = async (user: any) => {
   try {
     const response = await fetch(
       `https://test-vercel-chi-three.vercel.app/goals/get-goals?email=${user.email}`,

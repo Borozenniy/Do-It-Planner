@@ -45,6 +45,7 @@ createRoot(document.getElementById('root')!).render(
     <Auth0ProviderLayour>
       <BrowserRouter>
         <Routes>
+          <Route path='*' element={<Login />} />
           <Route path='/' element={<Login />} />
           <Route path='/app' element={<Root />}>
             <Route path='/app' element={<Dashboard />} />

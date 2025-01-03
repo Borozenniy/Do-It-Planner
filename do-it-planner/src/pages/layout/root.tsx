@@ -6,7 +6,7 @@ import { Sidebar } from './sidebar/sidebar';
 
 const Root = () => {
   const { user } = useAuth0();
-  console.log(user);
+
   const createUser = async () => {
     const userData = {
       name: user?.name,

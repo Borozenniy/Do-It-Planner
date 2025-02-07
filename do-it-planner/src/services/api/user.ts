@@ -103,7 +103,8 @@ export const changeGoalMode = async (goal: any) => {
         mode: goal.mode,
       }),
     });
-    console.log('Change goal mode response:', response);
+    const result = await response.json();
+    return result;
   } catch (error) {
     if (error instanceof Error) {
       console.error('Помилка:', error.message);

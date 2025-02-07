@@ -47,7 +47,9 @@ const Dashboard = () => {
     if (result.status === 'success') {
       fetchGoals();
       setSelectedGoal((prev) =>
-        prev ? { ...prev, mode: manageMode } : undefined
+        prev
+          ? { ...prev, mode: manageMode as 'kanban' | 'eisenhower' | 'none' }
+          : undefined
       );
     }
   };

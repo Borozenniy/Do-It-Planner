@@ -25,6 +25,7 @@ export type GoalProps = {
   isActive?: boolean;
   progressbar?: boolean;
   subgoals?: any[];
+  mode?: 'kanban' | 'eisenhower' | 'none';
 };
 
 const Goal = ({

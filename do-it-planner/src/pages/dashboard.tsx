@@ -75,7 +75,7 @@ const Dashboard = () => {
   useEffect(() => {
     setMode('none');
 
-    if (goals.length > 0 && showedAddGoalTip) {
+    if (goals.length > 0 && showedAddGoalTip !== true) {
       localStorage.setItem('addGoalTip', 'showed');
     }
   }, [selectedGoal, goals]);

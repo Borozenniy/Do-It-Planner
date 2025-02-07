@@ -2,15 +2,17 @@ import { useState, useEffect, useContext } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { ModalContext } from '../../modal/modal-provider';
 import { ToastContext } from '../../toast/toast-provider';
-import { AddToastType } from '../../toasts/types';
+import { Button } from '../../buttons/button';
 
-import CloseIcon from '../../../assets/icons/close.png';
+import { AddToastType } from '../../toasts/types';
+import { GoalProps } from '../../goals/goal/goal';
+import { subTaskProps } from '../../kanban/kanban';
 
 import { getGoals } from '../../../services/api/user';
 import { createSubtask } from '../../../services/api/subtask';
 
+import CloseIcon from '../../../assets/icons/close.png';
 import './add-subtask.scss';
-import { Button } from '../../buttons/button';
 
 type SubtaskType = {
   email: string | undefined;
@@ -63,7 +65,7 @@ const AddSubtask = ({ goalId, setSelectedGoal }: any) => {
 
   const updateGoal = async () => {
     const goalsData = await getGoals(user);
-    const goal = goalsData.filter((goal) => goal.id === goalId);
+    const goal = goalsData.filter((goal: GoalProps) => goal.id === goalId);
     if (goal.length > 0) {
       setSelectedGoal(goal[0]);
     }
@@ -123,7 +125,9 @@ const AddSubtask = ({ goalId, setSelectedGoal }: any) => {
               </div>
               <select
                 value={phase}
-                onChange={(e) => setPhase(e.target.value as phaseType)}
+                onChange={(e) =>
+                  setPhase(e.target.value as subTaskProps['phase'])
+                }
               >
                 <option value='to do'>To do</option>
                 <option value='in progress'>In progress</option>
@@ -136,7 +140,9 @@ const AddSubtask = ({ goalId, setSelectedGoal }: any) => {
               </div>
               <select
                 value={priority}
-                onChange={(e) => setPriority(e.target.value as priorityType)}
+                onChange={(e) =>
+                  setPriority(e.target.value as subTaskProps['priority'])
+                }
               >
                 <option value='No priority'>No priority</option>
                 <option value='low'>Low</option>

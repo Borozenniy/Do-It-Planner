@@ -5,7 +5,7 @@ import { ProgressBarRectangular } from '../../progress-bar/progress-bar-rectangu
 import { Button } from '../../buttons/button';
 import { Tooltip } from '../../tooltip/tooltip';
 
-import { subTaskProps } from '../kanban/kanban';
+import { subTaskProps } from '../../kanban/kanban';
 
 import { capitalizeFirstLetter } from '../../../services/utils/text';
 import { getDate } from '../../../services/utils/date';
@@ -16,6 +16,7 @@ import SubtaskIcon from '../../../assets/icons/tasks.svg';
 import './goal.scss';
 
 export type GoalProps = {
+  id?: number;
   goal: any;
   removeGoal?: any;
   onClick?: any;

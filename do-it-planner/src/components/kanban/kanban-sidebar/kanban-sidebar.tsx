@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { KanbanSidebarCategory } from '../kanban-sidebar-category/kanban-sidebar-category';
 import { Button } from '../../buttons/button';
 import { ProgressBar } from '../../progress-bar/progress-bar';
-import { Subtask } from '../../subtask/subtask';
+//import { Subtask } from '../../subtask/subtask';
+import { subTaskProps } from '../kanban';
 import './kanban-sidebar.scss';
 
 type KanbanSidebarProps = {
-  selectedGoal: any[];
+  selectedGoal: any;
   setSelectedGoal: any;
 };
 
@@ -18,7 +19,7 @@ const KanbanSidebar = ({
 }: KanbanSidebarProps) => {
   const navigate = useNavigate();
   const doneSubgoals = selectedGoal.subgoals.filter(
-    (subgoal) => subgoal.phase === 'done'
+    (subgoal: subTaskProps) => subgoal.phase === 'done'
   ).length;
 
   const navigateToPlanner = () => {
@@ -59,7 +60,7 @@ const KanbanSidebar = ({
             key={category}
             label={category}
             subgoals={selectedGoal.subgoals.filter(
-              (subgoal) => subgoal.phase === category
+              (subgoal: subTaskProps) => subgoal.phase === category
             )}
           />
         ))}

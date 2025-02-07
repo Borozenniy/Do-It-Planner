@@ -2,9 +2,9 @@ import { useEffect, useState, useContext } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { ToastContext } from '../toast/toast-provider';
 import { ModalContext } from '../modal/modal-provider';
-import { Subtask } from '../subtask/subtask';
-import { ProgressBarRectangular } from '../progress-bar/progress-bar-rectangular/progress-bar-rectangular';
-import { AddSubtask } from '../modals/add-subtask/add-subTask';
+//import { Subtask } from '../subtask/subtask';
+//import { ProgressBarRectangular } from '../progress-bar/progress-bar-rectangular/progress-bar-rectangular';
+import { AddSubtask } from '../modals/add-subtask/add-subtask';
 import { DeleteSubtask } from '../modals/delete-subtask/delete-subtask';
 import { AddToastType } from '../toasts/types';
 import { getGoals } from '../../services/api/user';
@@ -13,16 +13,16 @@ import { Tooltip } from '../tooltip/tooltip';
 
 import { changeSubtaskPhase, removeSubtask } from '../../services/api/subtask';
 
+import { GoalProps } from '../goals/goal/goal';
+
 import DeleteIcon from '../../assets/icons/recycle-bin.svg';
 import ArrowRight from '../../assets/icons/right-arrow.png';
 import ArrowLeft from '../../assets/icons/left-arrow.png';
 import DoneIcon from '../../assets/icons/done-round.svg';
 import AddIcon from '../../assets/icons/add-circle.svg';
-import DragAndDropIcon from '../../assets/icons/drag-and-drop.svg';
+//import DragAndDropIcon from '../../assets/icons/drag-and-drop.svg';
 
-import { getDate } from '../../services/utils/date';
 import { convertSubtaskPhasetoCSS } from '../../services/utils/text';
-import { capitalizeFirstLetter } from '../../services/utils/text';
 
 import './kanban.scss';
 import { Button } from '../buttons/button';
@@ -117,7 +117,9 @@ const Kanban = ({ selectedGoal, setSelectedGoal }: any) => {
 
   const updateGoal = async () => {
     const goalsData = await getGoals(user);
-    const goal = goalsData.filter((goal) => goal.id === selectedGoal.id);
+    const goal = goalsData.filter(
+      (goal: GoalProps) => goal.id === selectedGoal.id
+    );
     if (goal.length > 0) {
       setSelectedGoal(goal[0]);
     }

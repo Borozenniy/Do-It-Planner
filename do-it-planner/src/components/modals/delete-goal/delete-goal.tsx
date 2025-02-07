@@ -3,7 +3,12 @@ import { Button } from '../../buttons/button';
 
 import './delete-goal.scss';
 
-const DeleteGoal = ({ onConfirm, onCancel }: any) => {
+type DeleteGoalProps = {
+  onConfirm: () => void;
+  onCancel: () => void;
+};
+
+const DeleteGoal = ({ onConfirm, onCancel }: DeleteGoalProps) => {
   return (
     <div className='delete-goal'>
       <div className='delete-goal__title'>

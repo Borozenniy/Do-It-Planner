@@ -5,9 +5,7 @@ import { Button } from '../buttons/button';
 import { Goal } from './goal/goal';
 import { getGoals, createGoal, deleteGoal } from '../../services/api/user';
 
-import { GoalProps } from './goal/goal';
 import { InfoIcon } from '../icon/info-icon/info-icon';
-
 import CloseIcon from '../../assets/icons/close.png';
 
 import './goals.scss';

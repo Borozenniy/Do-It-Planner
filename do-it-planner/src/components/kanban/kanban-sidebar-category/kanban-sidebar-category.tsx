@@ -7,6 +7,7 @@ import { Subtask } from '../../subtask/subtask';
 import { Button } from '../../buttons/button';
 import { Tooltip } from '../../tooltip/tooltip';
 import { AddSubtask } from '../../modals/add-subtask/add-subTask';
+import { GoalProps } from '../../goals/goal/goal';
 import { subTaskProps } from '../kanban';
 
 import { getGoals } from '../../../services/api/user';
@@ -116,7 +117,9 @@ function KanbanSidebarCategory({
   const updateGoal = async () => {
     const goalsData = await getGoals(user);
     console.log(goalsData);
-    const goal = goalsData.filter((goal) => goal.id === selectedGoal.id);
+    const goal = goalsData.filter(
+      (goal: GoalProps) => goal.id === selectedGoal.id
+    );
     if (goal.length > 0) {
       setSelectedGoal(goal[0]);
     }

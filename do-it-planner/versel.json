@@ -3,6 +3,11 @@
     {
       "src": "/[^.]+",
       "dest": "/"
-    }
+    },
+
+    { "src": "/app", "dest": "/" },
+    { "src": "/app/dashboard", "dest": "/" },
+    { "src": "/app/goals", "dest": "/" },
+    { "src": "/app/planner", "dest": "/" }
   ]
 }

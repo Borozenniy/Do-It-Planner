@@ -1,0 +1,137 @@
+.planner-dashboard {
+  grid-area: content;
+  background-color: var(--surface);
+  overflow: hidden;
+
+  &__container {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 3fr;
+    grid-template-areas:
+      'header'
+      'board';
+    //display: flex;
+    //flex-direction: column;
+    gap: 10px;
+    //padding: 20px;
+  }
+
+  &__board {
+    grid-area: board;
+    background-color: var(--surface);
+    overflow: hidden;
+    margin: 0px 15px 5px;
+
+    &-container {
+      height: 25vh;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      margin: 10px;
+      min-height: 200px;
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    grid-area: header;
+    //height: 100%;
+    //font-size: 30px;
+    //box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.35);
+    background-color: var(--surface);
+    min-height: 150px;
+    overflow: hidden;
+    margin: 20px 20px 0px;
+    padding: 5px;
+    border-bottom: 1px solid var(--border-color);
+
+    &-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      padding: 20px;
+      //height: 100%;
+      width: 100%;
+    }
+
+    select {
+      max-width: 200px;
+      min-height: 30px;
+    }
+  }
+
+  &__input {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    &--glowing {
+      border-radius: 8px;
+      animation: glowing-animation 2s ease-in-out infinite;
+
+      @keyframes glowing-animation {
+        0% {
+          box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          box-shadow: 0 0 15px var(--primary);
+          transform: scale(1.01);
+          opacity: 1;
+        }
+        100% {
+          box-shadow: 0 0 8px var(--primary-50);
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &__title {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+
+  &__goal {
+    position: relative;
+    //width: 100%;
+    padding-right: 20px;
+  }
+
+  &__close-button {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+  }
+
+  &__buttons {
+    //display: flex;
+    //flex-direction: column;
+    button {
+      //padding: 5px;
+      margin: 5px;
+    }
+  }
+
+  &__modifications {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2px 30px;
+    position: relative;
+  }
+
+  &__no-goal-picked {
+    //width: 100%;
+    //height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    //background-color: var(--bg-color);
+  }
+}

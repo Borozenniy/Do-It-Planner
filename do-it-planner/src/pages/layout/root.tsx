@@ -1,84 +1,87 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Outlet } from 'react-router';
+import { ToastProvider } from '../../components/toast/toast-provider';
+import { ModalProvider } from '../../components/modal/modal-provider';
+import { ThemeProvider } from '../../components/theme-switcher/theme-provider';
+import { Outlet, useNavigate } from 'react-router';
+
 import { Sidebar } from './sidebar/sidebar';
+import { createUser } from '../../services/api/user';
+
 //import Dashboard from '../dashboard';
 
 const Root = () => {
-  const { user } = useAuth0();
+  const [isSidebarClosed, setIsSidebarClosed] = useState(true);
+  const { user, isAuthenticated } = useAuth0();
+  const navigate = useNavigate();
 
-  const createUser = async () => {
+  const createAccount = async () => {
     const userData = {
       name: user?.name,
       email: user?.email,
       id: Date.now(),
     };
-    console.log('userData:', userData);
-    try {
-      const response = await fetch(
-        'https://test-vercel-chi-three.vercel.app/users/create-user',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(userData),
-        }
-      );
-
-      //if (!response.ok) {
-      //  throw new Error('Помилка створення користувача');
-      //}
-
-      const data = await response.json();
-      console.log('Користувач створений:', data);
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error('Помилка:', error.message);
-      } else {
-        console.error('Unexpected error:', error);
-      }
-    }
+    await createUser(userData);
   };
+
   //const createUser = async () => {
-  //  const user = {
-  //    name: 'John Doe',
-  //    email: 'johndoe@gmail.com',
+  //  const userData = {
+  //    name: user?.name,
+  //    email: user?.email,
+  //    id: Date.now(),
   //  };
-  //  //try {
-  //  //  const response = await fetch('http://localhost:3000/api/users', {
-  //  //    method: 'POST',
-  //  //    headers: {
-  //  //      'Content-Type': 'application/json',
-  //  //    },
-  //  //    body: JSON.stringify(user),
-  //  //  });
-  //  //  console.log(response);
-  //  //} catch (error) {
-  //  //  console.log(error);
-  //  //}
-  //  const response = await fetch('http://localhost:3000/users/', {
-  //    method: 'POST',
-  //    headers: {
-  //      'Content-Type': 'application/json',
-  //    },
-  //    body: JSON.stringify(user),
-  //  });
-  //  if (!response.ok) {
-  //    console.log('Problem with creating user');
+  //  console.log('userData:', userData);
+  //  try {
+  //    const response = await fetch(
+  //      'https://test-vercel-chi-three.vercel.app/users/create-user',
+  //      {
+  //        method: 'POST',
+  //        headers: {
+  //          'Content-Type': 'application/json',
+  //        },
+  //        body: JSON.stringify(userData),
+  //      }
+  //    );
+
+  //    //if (!response.ok) {
+  //    //  throw new Error('Помилка створення користувача');
+  //    //}
+
+  //    const data = await response.json();
+  //    console.log('Користувач створений:', data);
+  //  } catch (error) {
+  //    if (error instanceof Error) {
+  //      console.error('Помилка:', error.message);
+  //    } else {
+  //      console.error('Unexpected error:', error);
+  //    }
   //  }
-  //  console.log('Try to create user');
   //};
 
   useEffect(() => {
-    if (user) createUser();
+    if (user) createAccount();
   }, [user]);
 
+  useEffect(() => {
+    if (!isAuthenticated) navigate('/login');
+  }, [isAuthenticated]);
+
   return (
-    <div className='layout'>
-      <Sidebar />
-      <Outlet />
-      {/*<Dashboard />*/}
+    <div
+      className={`layout ${isSidebarClosed ? 'layout--closed-sidebar' : ''}`}
+    >
+      <ThemeProvider>
+        <ToastProvider>
+          <ModalProvider>
+            <Sidebar
+              setIsSidebarClosed={setIsSidebarClosed}
+              isSidebarClosed={isSidebarClosed}
+            />
+            <Outlet />
+            {/*<Dashboard />*/}
+          </ModalProvider>
+        </ToastProvider>
+      </ThemeProvider>
     </div>
   );
 };

@@ -1,0 +1,46 @@
+.kanban-sidebar-category {
+  margin: 15px 0px 5px;
+  color: var(--text-color);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: var(--surface-20);
+    border-radius: 12px;
+    padding: 0px 5px;
+    cursor: pointer;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    height: 50px;
+  }
+
+  &__buttons {
+    display: flex;
+  }
+
+  &__subtasks {
+    display: none;
+    margin-left: 10px;
+
+    &--open {
+      display: block;
+    }
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}

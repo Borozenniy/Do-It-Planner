@@ -1,7 +1,126 @@
 .goal {
-  padding: 10px;
-  margin: 5px;
-  border: 1px solid black;
-  border-radius: 12px;
-  background-color: lightseagreen;
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+  height: 145px;
+  word-break: break-all;
+  background-color: var(--surface-20);
+  padding: 5px 10px;
+  margin: 10px;
+  border-radius: 8px;
+  transition: all 0.25s ease-in;
+  position: relative;
+
+  &:hover {
+    background-color: var(--surface-40);
+    transform: scale(1.03);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &__title {
+    margin-top: 20px;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__date {
+    min-width: 55px;
+  }
+
+  &__text {
+    font-size: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__sign {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 15px;
+    margin: 5px;
+
+    &:hover {
+      background-color: var(--primary);
+    }
+
+    &--no-border {
+      border: none;
+    }
+  }
+
+  &__indicators {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__progress-bar {
+    position: absolute;
+    top: 0;
+    right: 5px;
+  }
+
+  &__buttons {
+  }
+
+  &--hight-priority {
+    background: var(--goal-priority-background);
+    opacity: 1;
+
+    &:hover {
+      transform: scale(1.03);
+      background: var(--goal-priority-background-hover);
+    }
+
+    .goal__sign {
+      &:hover {
+        background: var(--goal-priority-background);
+      }
+    }
+  }
+
+  &--active-hight-priority {
+    box-shadow: var(--goal-priority-box-shadow);
+    transform: scale(1.03);
+    background: var(--goal-priority-background-active);
+  }
+  &--active-no-priority {
+    transform: scale(1.03);
+    background-color: var(--surface-50);
+    box-shadow: 0 0 5px 2px var(--primary-30);
+  }
+
+  &--clickable {
+    cursor: pointer;
+  }
+
+  &__additional-info {
+    position: absolute;
+    top: 3px;
+    right: 8px;
+  }
 }

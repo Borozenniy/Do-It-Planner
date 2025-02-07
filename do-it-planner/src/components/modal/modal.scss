@@ -1,0 +1,80 @@
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+
+  &.show {
+    opacity: 1;
+    pointer-events: visible;
+    z-index: 98;
+  }
+
+  &.exit {
+    opacity: 0;
+  }
+
+  &__close {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    color: var(--neutral-neutral60);
+    font-size: 16px;
+    z-index: 3;
+    display: flex;
+    width: 24px;
+    height: 24px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  &__content {
+    max-width: 750px;
+    position: relative;
+    background-color: var(--surface-30);
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    max-width: 60vw;
+    overflow: hidden;
+
+    p {
+      //@include body-large;
+      color: var(--neutral-neutral80);
+    }
+
+    li {
+      //@include body-large;
+      color: var(--neutral-neutral80);
+    }
+
+    strong {
+      //@include body-large-bold;
+      color: var(--neutral-neutral80);
+    }
+
+    .tabs-header__tab {
+      //@include title-medium;
+    }
+  }
+
+  &__body {
+    margin-top: 0px;
+    border-radius: 8px;
+    overflow: scroll;
+    max-height: 80vh;
+    background-color: var(--surface-30);
+  }
+}
+
+.body-no-scroll {
+  overflow: hidden;
+}

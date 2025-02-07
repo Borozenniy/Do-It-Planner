@@ -1,4 +1,21 @@
 .sidebar {
   grid-area: sidebar;
-  background-color: blue;
+  background-color: var(--surface-10);
+  box-shadow: 1px 0px 8px 2px rgba(0, 0, 0, 0.35);
+  z-index: 1;
+  //overflow: hidden;
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 10px;
+  }
+
+  &__logout {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+  }
 }

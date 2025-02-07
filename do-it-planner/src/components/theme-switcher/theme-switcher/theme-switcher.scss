@@ -1,0 +1,10 @@
+.theme-switcher {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  display: flex;
+  padding: 4px;
+  background-color: var(--surface-50);
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+}

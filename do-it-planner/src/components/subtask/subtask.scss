@@ -1,0 +1,61 @@
+.subtask {
+  padding: 10px 5px 5px 5px;
+  min-height: 70px;
+  position: relative;
+  margin: 7px 0px;
+  border-radius: 6px;
+  background-color: var(--surface-30);
+  color: var(--text-color);
+  overflow: hidden;
+  transition: 0.25s ease-in;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 7px;
+    width: 100%;
+  }
+
+  &--high {
+    background: var(--subtask-high-prioriy-background);
+    box-shadow: var(--subtask-high-prioriy-box-shadow);
+  }
+
+  //&--to-do {
+  //  &::before {
+  //    background-color: rgb(64, 64, 244);
+  //  }
+  //}
+
+  //&--in-progress {
+  //  &::before {
+  //    background-color: rgb(249, 173, 32);
+  //  }
+  //}
+
+  //&--done {
+  //  &::before {
+  //    background-color: rgb(100, 204, 100);
+  //  }
+  //}
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.01);
+    background-color: var(--surface-40);
+  }
+
+  &__title {
+    display: flex;
+    font-size: 20px;
+    margin-bottom: 10px;
+    word-break: break-all;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+  }
+}

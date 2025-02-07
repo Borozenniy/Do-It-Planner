@@ -9,13 +9,13 @@ const Login = () => {
   const { isAuthenticated } = useAuth0();
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/app');
+      navigate('/app/dashboard');
     }
   }, [isAuthenticated]);
 
   return (
-    <div>
-      <h1> Do It Planner </h1>
+    <div className='login'>
+      <p> Do It Planner </p>
       <LogInButton />
     </div>
   );

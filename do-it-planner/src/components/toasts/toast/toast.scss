@@ -1,0 +1,168 @@
+.toast {
+  position: relative;
+  width: 244px;
+  border-radius: 12px;
+  margin: 12px;
+  margin-left: 20px;
+  color: black;
+  padding: 20px;
+  box-shadow: 2px 5px 10px var(--border-color);
+  background: var(--bg-color-white);
+  overflow: hidden;
+  animation: fadeout 0.65s;
+  p {
+    margin: 0px;
+  }
+  &--active {
+    visibility: visible;
+    animation: fadein 0.65s;
+  }
+  &--clickable {
+    cursor: pointer;
+  }
+  &__icon {
+    width: 24px;
+    grid-area: icon;
+  }
+  &__message {
+    justify-content: start;
+    column-gap: 16px;
+    grid-template-columns: 24px;
+    grid-template-areas:
+      'icon title'
+      'icon text';
+  }
+  &__title {
+    //@include title-small-bold;
+    font-family: 'NunitoSans-Bold';
+    font-size: 14px;
+    line-height: 20px;
+    text-decoration: none;
+    letter-spacing: 0px;
+    font-weight: 700;
+    max-width: 280px;
+    //color: var(--text-color);
+    padding-bottom: 6px;
+    grid-area: title;
+  }
+  &__button-close {
+    position: absolute;
+    cursor: pointer;
+    font-size: 22px;
+    padding: 0 6px;
+    color: var(--text-disabled);
+    top: 3px;
+    right: 2px;
+    &:hover {
+      color: var(--black);
+    }
+  }
+  &__additional-message {
+    //@include body-small;
+    font-family: 'Lato-Regular';
+    font-size: 12px;
+    line-height: 16px;
+    text-decoration: none;
+    letter-spacing: 0px;
+    font-weight: normal;
+    min-height: 16px;
+    grid-area: text;
+    color: var(--neutral-neutral70);
+  }
+  &__progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 6px;
+    width: 100%;
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      height: 6px;
+      width: 100%;
+    }
+    &--active::before {
+      animation: progress 4.95s linear forwards;
+    }
+    &--mode-success {
+      background-color: var(--primary-green-opacity40);
+      &::before {
+        background-color: var(--primary-green);
+      }
+    }
+
+    &--mode-error {
+      background-color: var(--error-opacity30);
+      &::before {
+        background-color: var(--error-error60);
+      }
+    }
+
+    &--mode-warning {
+      background-color: var(--purpose-warning-opacity30);
+      &::before {
+        background-color: var(--purpose-warning);
+      }
+    }
+
+    &--mode-info {
+      background-color: var(--neutral60-opacity30);
+      &::before {
+        background-color: var(--neutral60);
+      }
+    }
+
+    &--mode-quest {
+      background-color: var(--company-opacity30);
+      &::before {
+        background-color: var(--company);
+      }
+    }
+
+    &--mode-completed {
+      background-color: var(--neutral-neutral80-opacity30);
+      &::before {
+        background-color: var(--neutral-neutral80);
+      }
+    }
+  }
+}
+
+@keyframes progress {
+  100% {
+    right: 100%;
+  }
+  0% {
+    right: 0%;
+  }
+}
+
+@keyframes fadein {
+  0% {
+    right: -95%;
+    opacity: 0;
+  }
+  75% {
+    right: 6%;
+  }
+  100% {
+    right: 0%;
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  0% {
+    right: 0;
+    opacity: 1;
+  }
+  25% {
+    right: 6%;
+  }
+  100% {
+    right: -95%;
+    opacity: 0;
+  }
+}

@@ -1,0 +1,108 @@
+.button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  padding: 5px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+
+  &__label {
+  }
+
+  &--size {
+    img {
+      width: 16px;
+    }
+    &-tiny {
+      padding: 2px;
+      font-size: 12px;
+
+      img {
+        width: 12px;
+      }
+    }
+
+    &-small {
+      padding: 5px;
+      font-size: 14px;
+
+      img {
+        width: 18px;
+      }
+    }
+    &-medium {
+      padding: 8px;
+      font-size: 18px;
+      img {
+        width: 24px;
+      }
+    }
+    &-large {
+      padding: 10px;
+      font-size: 24px;
+
+      img {
+        width: 30px;
+      }
+    }
+  }
+
+  &--mode {
+    &-primary {
+      background-color: var(--primary);
+      &:hover {
+        background-color: var(--primary-green);
+        //box-shadow: 0 0 3px 3px var(--primary-40);
+      }
+    }
+
+    &-danger {
+      background-color: rgb(255, 144, 144);
+      &:hover {
+        background-color: var(--danger);
+      }
+    }
+  }
+
+  &--active {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    box-shadow: 0 0 2px 2px var(--primary-40);
+    &:hover {
+      background: linear-gradient(to right, #56d8c9, rgb(19, 126, 126));
+    }
+  }
+
+  &--disabled {
+    background-color: rgb(206, 204, 204);
+    &:hover {
+      background-color: var(--gray);
+    }
+  }
+
+  &--transparent {
+    background-color: transparent;
+  }
+
+  &--rounded {
+    border-radius: 50%;
+  }
+
+  .image-padding-left {
+    padding-left: 10px;
+  }
+
+  &--without-paddings {
+    padding: 0px;
+  }
+
+  &--img-left {
+    flex-direction: row-reverse;
+    .image-padding-left {
+      padding-left: 0px;
+      padding-right: 5px;
+    }
+  }
+}

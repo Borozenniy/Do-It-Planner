@@ -1,0 +1,53 @@
+.kanban-sidebar {
+  display: flex;
+  flex-direction: column;
+  color: var(--text-color);
+
+  &__subgoals-information {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    margin: 10px;
+  }
+
+  &__information {
+    background-color: var(--surface-10);
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+
+  &__information-content {
+    height: 100%;
+  }
+
+  &__kanban {
+    height: 100%;
+    //padding: 10px;
+    //background-color: var(--white);
+    //box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.35);
+    border-radius: 12px;
+  }
+
+  &__no-subgoals {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px;
+  }
+
+  &__title {
+    display: flex;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: var(--surface);
+    border-radius: 12px;
+    padding: 10px;
+    cursor: pointer;
+  }
+}

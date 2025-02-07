@@ -1,0 +1,73 @@
+.add-subtask {
+  padding: 10px 20px;
+  min-width: 500px;
+  min-height: 250px;
+  background-color: var(--surface-30);
+  color: var(--text-color);
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .subtask-form {
+    display: flex;
+    flex-direction: column;
+
+    &__option-title {
+      margin-bottom: 10px;
+    }
+    &__option {
+      font-size: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-items: center;
+      margin: 10px 5px;
+      p {
+        margin-right: 10px;
+      }
+      &--phase {
+      }
+      &--priority {
+      }
+    }
+
+    &__input-bar {
+      display: flex;
+      width: 100%;
+      min-width: 250px;
+      //border: none;
+      //border-right: 6px solid transparent;
+
+      border-radius: 8px;
+      &:focus-within {
+        box-shadow: 0 0 2px 2px var(--primary-10);
+      }
+      input {
+        font-size: 16px;
+        width: 100%;
+        padding-left: 5px;
+        background-color: white;
+        color: black;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+
+      button {
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+      }
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px;
+  }
+}

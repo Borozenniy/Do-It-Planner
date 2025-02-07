@@ -1,7 +1,7 @@
 import { Button } from '../../buttons/button';
 
-import MoonIcon from '../../../../assets/icons/moon.png';
-import SunIcon from '../../../../assets/icons/sun.png';
+import MoonIcon from '../../../assets/icons/moon.png';
+import SunIcon from '../../../assets/icons/sun.png';
 
 import './theme-option.scss';
 

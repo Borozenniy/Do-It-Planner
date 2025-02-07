@@ -6,7 +6,7 @@ import { AddToastType } from '../../toasts/types';
 import { Subtask } from '../../subtask/subtask';
 import { Button } from '../../buttons/button';
 import { Tooltip } from '../../tooltip/tooltip';
-import { AddSubtask } from '../../modals/add-subtask/add-subTask';
+import { AddSubtask } from '../../modals/add-subtask/add-subtask';
 import { GoalProps } from '../../goals/goal/goal';
 import { subTaskProps } from '../kanban';
 

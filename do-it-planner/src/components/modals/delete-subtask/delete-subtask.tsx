@@ -2,7 +2,12 @@ import { Button } from '../../buttons/button';
 
 import './delete-subtask.scss';
 
-const DeleteSubtask = ({ onConfirm, onCancel }: any) => {
+type DeleteSubtaskProps = {
+  onConfirm: () => void;
+  onCancel: () => void;
+};
+
+const DeleteSubtask = ({ onConfirm, onCancel }: DeleteSubtaskProps) => {
   return (
     <div className='delete-subtask'>
       <div className='delete-subtask__title'>

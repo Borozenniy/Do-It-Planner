@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '../../buttons/button';
 
 import './delete-goal.scss';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Tooltip } from '../tooltip/tooltip';
 
 import { capitalizeFirstLetter } from '../../services/utils/text';
@@ -13,7 +12,6 @@ type PriorityProps = {
   priority: 'no priority' | 'low' | 'medium' | 'high';
 };
 
-//&#128293;
 const prioritySelect = (priority: PriorityProps['priority']) => {
   switch (priority) {
     case 'no priority':

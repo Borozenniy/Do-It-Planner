@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { ToastProvider } from '../../components/toast/toast-provider';
 import { ModalProvider } from '../../components/modal/modal-provider';
-import { ThemeProvider } from '../../components/theme-switcher/theme-provider';
 import { Outlet, useNavigate } from 'react-router';
 
 import { Sidebar } from './sidebar/sidebar';
@@ -70,18 +69,16 @@ const Root = () => {
     <div
       className={`layout ${isSidebarClosed ? 'layout--closed-sidebar' : ''}`}
     >
-      <ThemeProvider>
-        <ToastProvider>
-          <ModalProvider>
-            <Sidebar
-              setIsSidebarClosed={setIsSidebarClosed}
-              isSidebarClosed={isSidebarClosed}
-            />
-            <Outlet />
-            {/*<Dashboard />*/}
-          </ModalProvider>
-        </ToastProvider>
-      </ThemeProvider>
+      <ToastProvider>
+        <ModalProvider>
+          <Sidebar
+            setIsSidebarClosed={setIsSidebarClosed}
+            isSidebarClosed={isSidebarClosed}
+          />
+          <Outlet />
+          {/*<Dashboard />*/}
+        </ModalProvider>
+      </ToastProvider>
     </div>
   );
 };

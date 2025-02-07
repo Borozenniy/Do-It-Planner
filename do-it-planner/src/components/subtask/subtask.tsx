@@ -14,7 +14,19 @@ import ArrowUp from '../../assets/icons/arrow-up.svg';
 import ArrowDown from '../../assets/icons/arrow-down.svg';
 import './subtask.scss';
 
-const Subtask = ({ subtask, decreasePhase, raisePhase, deleteSubtask }) => {
+type SubtaskComponentProps = {
+  subtask: subTaskProps;
+  decreasePhase: (phase: subTaskProps) => void;
+  raisePhase: (phase: subTaskProps) => void;
+  deleteSubtask: (subTask: subTaskProps) => void;
+};
+
+const Subtask = ({
+  subtask,
+  decreasePhase,
+  raisePhase,
+  deleteSubtask,
+}: SubtaskComponentProps) => {
   const { openModal, closeModal } = useContext(ModalContext) as any;
 
   const handleDeleteSubtask = (subtask: subTaskProps) => {
@@ -32,7 +44,7 @@ const Subtask = ({ subtask, decreasePhase, raisePhase, deleteSubtask }) => {
       }`}
       key={subtask.id}
       draggable
-      onDragStart={(e) => handleDragStart(e, subtask.id)}
+      //onDragStart={(e) => handleDragStart(e, subtask.id)}
     >
       <div className='subtask__title'>{subtask.title}</div>
       <div
@@ -52,7 +64,6 @@ const Subtask = ({ subtask, decreasePhase, raisePhase, deleteSubtask }) => {
               isTransparent={true}
               img={ArrowUp}
               onClick={() => decreasePhase(subtask)}
-              disabled={subtask.phase === 'to do'}
             />
           )}
           {subtask.phase !== 'done' && (
@@ -62,7 +73,6 @@ const Subtask = ({ subtask, decreasePhase, raisePhase, deleteSubtask }) => {
               isTransparent={true}
               img={ArrowDown}
               onClick={() => raisePhase(subtask)}
-              disabled={subtask.phase === 'done'}
             />
           )}
           <Tooltip label='Delete subgoal' position='bottom-center'>

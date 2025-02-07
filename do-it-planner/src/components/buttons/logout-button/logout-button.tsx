@@ -6,16 +6,13 @@ import ExitIcon from '../../../assets/icons/exit.svg';
 import ExitIconWhite from '../../../assets/icons/exit-white.svg';
 
 type LogOutButtonProps = {
-  currentTheme: 'dark' | 'light';
   onlyIcon?: boolean;
 };
 
-const LogOutButton = ({
-  currentTheme = 'dark',
-  onlyIcon = false,
-}: LogOutButtonProps) => {
+const LogOutButton = ({ onlyIcon = false }: LogOutButtonProps) => {
   const { isAuthenticated } = useAuth0();
   const { logout } = useAuth0();
+  const currentTheme = document.body.getAttribute('data-theme') || 'dark';
   if (isAuthenticated) {
     return (
       <>

@@ -6,7 +6,7 @@ import ExitIcon from '../../../assets/icons/exit.svg';
 import ExitIconWhite from '../../../assets/icons/exit-white.svg';
 
 type LogOutButtonProps = {
-  currentTheme: 'dark' | 'light';
+  currentTheme?: 'dark' | 'light';
   onlyIcon?: boolean;
 };
 

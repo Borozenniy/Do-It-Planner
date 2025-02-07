@@ -17,10 +17,18 @@ import KanbanMeme from '../assets/image/kanban-meme.png';
 
 import './styles/dashboard.scss';
 
+type selectedGoalProps = {
+  name: GoalProps['name'];
+  id: GoalProps['id'];
+  highPriority: GoalProps['highPriority'];
+  progressbar: GoalProps['progressbar'];
+  mode: 'kanban' | 'eisenhower' | 'none';
+};
+
 const Dashboard = () => {
   const { user } = useAuth0();
   const [goals, setGoals] = useState<GoalProps[]>([]);
-  const [selectedGoal, setSelectedGoal] = useState<GoalProps>();
+  const [selectedGoal, setSelectedGoal] = useState<selectedGoalProps>();
   const [mode, setMode] = useState<string>('none');
   const [search, setSearch] = useState<string>('');
 
@@ -114,7 +122,7 @@ const Dashboard = () => {
                 search !== '' &&
                 goals
                   .filter((goal) =>
-                    goal.name.toLowerCase().includes(search.toLowerCase())
+                    goal.name?.toLowerCase().includes(search.toLowerCase())
                   )
                   .map((goal) => (
                     <Goal

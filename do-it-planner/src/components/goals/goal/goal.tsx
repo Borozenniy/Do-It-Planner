@@ -24,6 +24,7 @@ export type GoalProps = {
   highPriority: boolean;
   isActive?: boolean;
   progressbar?: boolean;
+  subgoals?: any[];
 };
 
 const Goal = ({

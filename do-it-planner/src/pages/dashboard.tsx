@@ -17,18 +17,10 @@ import KanbanMeme from '../assets/image/kanban-meme.png';
 
 import './styles/dashboard.scss';
 
-type selectedGoalProps = {
-  name: GoalProps['name'];
-  id: GoalProps['id'];
-  highPriority: GoalProps['highPriority'];
-  progressbar: GoalProps['progressbar'];
-  mode: 'kanban' | 'eisenhower' | 'none';
-};
-
 const Dashboard = () => {
   const { user } = useAuth0();
   const [goals, setGoals] = useState<GoalProps[]>([]);
-  const [selectedGoal, setSelectedGoal] = useState<selectedGoalProps>();
+  const [selectedGoal, setSelectedGoal] = useState<GoalProps>();
   const [mode, setMode] = useState<string>('none');
   const [search, setSearch] = useState<string>('');
 

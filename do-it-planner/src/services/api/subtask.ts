@@ -1,6 +1,6 @@
 import { BASE_URL } from './http';
 
-export const createSubtask = async (data: unknown) => {
+export const createSubtask = async (data: any) => {
   try {
     const response = await fetch(`${BASE_URL}/goal/add-subgoal`, {
       method: 'POST',
@@ -21,7 +21,7 @@ export const createSubtask = async (data: unknown) => {
   }
 };
 
-export const changeSubtaskPhase = async (data: unknown) => {
+export const changeSubtaskPhase = async (data: any) => {
   try {
     const response = await fetch(`${BASE_URL}/subgoal/change-phase`, {
       method: 'POST',
@@ -42,7 +42,7 @@ export const changeSubtaskPhase = async (data: unknown) => {
   }
 };
 
-export const removeSubtask = async (data: unknown) => {
+export const removeSubtask = async (data: any) => {
   try {
     const response = await fetch(`${BASE_URL}/subgoal/delete-subgoal`, {
       method: 'DELETE',

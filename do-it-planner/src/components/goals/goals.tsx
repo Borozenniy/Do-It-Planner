@@ -196,7 +196,7 @@ const Goals = () => {
                   <Goal
                     key={goal.id}
                     goal={goal}
-                    hasProgressBar={goal.progressbar}
+                    progressbar={goal.progressbar}
                     highPriority
                     removeGoal={removeGoal}
                   />
@@ -208,7 +208,7 @@ const Goals = () => {
                     key={goal.id}
                     goal={goal}
                     highPriority={false}
-                    hasProgressBar={false}
+                    progressbar={false}
                     removeGoal={removeGoal}
                   />
                 ))}

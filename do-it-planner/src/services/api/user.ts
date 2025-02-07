@@ -1,6 +1,6 @@
 import { BASE_URL } from './http';
 
-export const createUser = async (user: unknown) => {
+export const createUser = async (user: any) => {
   try {
     const response = await fetch(`${BASE_URL}/user/create-user`, {
       method: 'POST',
@@ -25,7 +25,7 @@ export const createUser = async (user: unknown) => {
   }
 };
 
-export const getGoals = async (user: unknown) => {
+export const getGoals = async (user: any) => {
   try {
     const response = await fetch(
       `${BASE_URL}/goal/get-goals?email=${user.email}`,
@@ -49,7 +49,7 @@ export const getGoals = async (user: unknown) => {
   }
 };
 
-export const createGoal = async (goal: unknown) => {
+export const createGoal = async (goal: any) => {
   try {
     const response = await fetch(`${BASE_URL}.app/goal/create-goal`, {
       method: 'POST',
@@ -71,7 +71,7 @@ export const createGoal = async (goal: unknown) => {
   }
 };
 
-export const deleteGoal = async (goal: unknown) => {
+export const deleteGoal = async (goal: any) => {
   try {
     const response = await fetch(`${BASE_URL}/goal/delete-goal`, {
       method: 'DELETE',
@@ -90,7 +90,7 @@ export const deleteGoal = async (goal: unknown) => {
   }
 };
 
-export const changeGoalMode = async (goal: unknown) => {
+export const changeGoalMode = async (goal: any) => {
   try {
     const response = await fetch(`${BASE_URL}/goal/change-goal-mode`, {
       method: 'PUT',

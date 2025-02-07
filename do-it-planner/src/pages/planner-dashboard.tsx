@@ -135,7 +135,7 @@ const PlannerDashboard = () => {
                 <Goal
                   key={selectedGoal.id}
                   goal={selectedGoal}
-                  hasProgressBar={selectedGoal.progressbar}
+                  progressbar={selectedGoal.progressbar}
                   highPriority={selectedGoal.highPriority}
                 />
                 {dragAndDropTip !== 'showed' && mode === 'kanban' && (

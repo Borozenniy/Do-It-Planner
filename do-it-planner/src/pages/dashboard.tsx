@@ -6,6 +6,8 @@ import { Tooltip } from '../components/tooltip/tooltip';
 import { Goal } from '../components/goals/goal/goal';
 import { AddGoalTip } from '../components/tips/add-goal-tip/add-goal-tip';
 
+import { GoalProps } from '../components/goals/goal/goal';
+
 import { getGoals, changeGoalMode, deleteGoal } from '../services/api/user';
 
 import KanbanIcon from '../assets/icons/kanban.png';
@@ -15,17 +17,10 @@ import KanbanMeme from '../assets/image/kanban-meme.png';
 
 import './styles/dashboard.scss';
 
-type Goal = {
-  id: number;
-  name: string;
-  highPriority: boolean;
-  progressbar: boolean;
-};
-
 const Dashboard = () => {
   const { user } = useAuth0();
-  const [goals, setGoals] = useState<Goal[]>([]);
-  const [selectedGoal, setSelectedGoal] = useState<Goal>();
+  const [goals, setGoals] = useState<GoalProps[]>([]);
+  const [selectedGoal, setSelectedGoal] = useState<GoalProps>();
   const [mode, setMode] = useState<string>('none');
   const [search, setSearch] = useState<string>('');
 
@@ -126,7 +121,7 @@ const Dashboard = () => {
                       key={goal.id}
                       goal={goal}
                       removeGoal={removeGoal}
-                      hasProgressBar={goal.progressbar}
+                      progressbar={goal.progressbar}
                       isActive={selectedGoal?.id === goal.id}
                       onClick={() => setSelectedGoal(goal)}
                       highPriority={goal.highPriority}
@@ -143,7 +138,7 @@ const Dashboard = () => {
                           key={goal.id}
                           goal={goal}
                           highPriority={true}
-                          hasProgressBar={goal.progressbar}
+                          progressbar={goal.progressbar}
                           removeGoal={removeGoal}
                           isActive={selectedGoal?.id === goal.id}
                           onClick={() => setSelectedGoal(goal)}
@@ -161,7 +156,7 @@ const Dashboard = () => {
                       goal={goal}
                       removeGoal={removeGoal}
                       highPriority={goal.highPriority}
-                      hasProgressBar={goal.progressbar}
+                      progressbar={goal.progressbar}
                       isActive={selectedGoal?.id === goal.id}
                       onClick={() => setSelectedGoal(goal)}
                     />

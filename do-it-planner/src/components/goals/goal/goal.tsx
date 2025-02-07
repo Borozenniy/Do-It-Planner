@@ -17,12 +17,13 @@ import './goal.scss';
 
 export type GoalProps = {
   id?: number;
+  name?: string;
   goal: any;
   removeGoal?: any;
   onClick?: any;
   highPriority: boolean;
   isActive?: boolean;
-  hasProgressBar: boolean;
+  progressbar?: boolean;
 };
 
 const Goal = ({
@@ -31,7 +32,7 @@ const Goal = ({
   onClick,
   highPriority = false,
   isActive = false,
-  hasProgressBar = false,
+  progressbar = false,
 }: GoalProps) => {
   const { openModal, closeModal } = useContext(ModalContext) as any;
   const deleteGoal = () => {
@@ -81,7 +82,7 @@ const Goal = ({
       onClick={onClick}
     >
       <div className='goal__content'>
-        {hasProgressBar && (
+        {progressbar && (
           <div className='goal__progress-bar'>
             <Tooltip
               label={`${progressBarValueInPercent()}%`}

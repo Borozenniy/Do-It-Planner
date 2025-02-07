@@ -84,28 +84,6 @@ const AddSubtask = ({ goalId, setSelectedGoal }: any) => {
     });
   };
 
-  //const createSubtask = async () => {
-
-  //  try {
-  //    const response = await fetch('http://localhost:3000/goal/add-subgoal', {
-  //      method: 'POST',
-  //      headers: {
-  //        'Content-Type': 'application/json',
-  //      },
-  //      body: JSON.stringify(newSubtask),
-  //    });
-
-  //    const result = await response.json();
-  //    return result;
-  //  } catch (error) {
-  //    if (error instanceof Error) {
-  //      console.error('Помилка:', error.message);
-  //    } else {
-  //      console.error('Unexpected error:', error);
-  //    }
-  //  }
-  //};
-
   const cleanForm = () => {
     setTitle('');
     setPhase('to do');

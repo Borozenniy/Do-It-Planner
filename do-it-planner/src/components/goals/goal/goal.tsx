@@ -1,8 +1,7 @@
-import { useEffect, useState, useContext } from 'react';
+import { useContext } from 'react';
 import { ModalContext } from '../../modal/modal-provider';
 import { DeleteGoal } from '../../modals/delete-goal/delete-goal';
 import { ProgressBarRectangular } from '../../progress-bar/progress-bar-rectangular/progress-bar-rectangular';
-import { SubtaskPriority } from '../../subtask-priority/subtask-priority';
 import { Button } from '../../buttons/button';
 import { Tooltip } from '../../tooltip/tooltip';
 
@@ -11,7 +10,6 @@ import { getDate } from '../../../services/utils/date';
 
 import DeleteIcon from '../../../assets/icons/recycle-bin.svg';
 import SubtaskIcon from '../../../assets/icons/tasks.svg';
-import HorizontalDotsIcon from '../../../assets/icons/dots-horizontal.svg';
 
 import './goal.scss';
 

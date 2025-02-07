@@ -1,4 +1,4 @@
-import { Button } from '../../../buttons/button';
+import { Button } from '../../buttons/button';
 
 import MoonIcon from '../../../../assets/icons/moon.png';
 import SunIcon from '../../../../assets/icons/sun.png';
@@ -15,12 +15,9 @@ const themeIcon = {
 };
 
 const ThemeOption = ({ theme }: ThemeOptionProps) => {
-  const dark = 'dark';
-  console.log('theme:', theme);
-
-  const setTheme = (theme: ThemeOptionProps) => {
-    document.querySelector('body')?.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
+  const setTheme = (newTheme: ThemeOptionProps['theme']) => {
+    document.querySelector('body')?.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
   };
 
   const currentTheme = localStorage.getItem('theme');

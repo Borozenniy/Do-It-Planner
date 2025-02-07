@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router';
-import { User } from '../../../../components/user/user';
-import { LogOutButton } from '../../../../components/buttons/logout-button/logout-button';
 import DashboardIcon from '../../../../assets/icons/dashboard.svg';
 import DashboardIconWhite from '../../../../assets/icons/dashboard-white.svg';
 import PlannerIcon from '../../../../assets/icons/planner.svg';

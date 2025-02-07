@@ -1,6 +1,6 @@
 import { BASE_URL } from './http';
 
-export const createUser = async (user: any) => {
+export const createUser = async (user: unknown) => {
   try {
     const response = await fetch(`${BASE_URL}/user/create-user`, {
       method: 'POST',
@@ -25,7 +25,7 @@ export const createUser = async (user: any) => {
   }
 };
 
-export const getGoals = async (user: any) => {
+export const getGoals = async (user: unknown) => {
   try {
     const response = await fetch(
       `${BASE_URL}/goal/get-goals?email=${user.email}`,
@@ -71,7 +71,26 @@ export const createGoal = async (goal: unknown) => {
   }
 };
 
-export const changeGoalMode = async (goal: any) => {
+export const deleteGoal = async (goal: unknown) => {
+  try {
+    const response = await fetch(`${BASE_URL}/goal/delete-goal`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: goal?.email, id: goal.id }),
+    });
+    console.log('Delete goal response:', response);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Помилка:', error.message);
+    } else {
+      console.error('Unexpected error:', error);
+    }
+  }
+};
+
+export const changeGoalMode = async (goal: unknown) => {
   try {
     const response = await fetch(`${BASE_URL}/goal/change-goal-mode`, {
       method: 'PUT',

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { ModalContext } from '../../modal/modal-provider';
 import { ToastContext } from '../../toast/toast-provider';
@@ -32,7 +32,7 @@ interface KanbanSidebarCategoryProps {
   selectedGoal: any;
   setSelectedGoal: any;
   label: string;
-  subgoals: subTask[];
+  subgoals: subTaskProps[];
 }
 
 function KanbanSidebarCategory({

@@ -5,7 +5,6 @@ import { Button } from '../components/buttons/button';
 import { Tooltip } from '../components/tooltip/tooltip';
 import { Goal } from '../components/goals/goal/goal';
 import { AddGoalTip } from '../components/tips/add-goal-tip/add-goal-tip';
-import { Goals } from '../components/goals/goals';
 
 import { getGoals, changeGoalMode, deleteGoal } from '../services/api/user';
 
@@ -67,7 +66,7 @@ const Dashboard = () => {
       await deleteGoal(goalData);
       await fetchGoals();
     }
-    setSelectedGoal('');
+    setSelectedGoal(undefined);
   };
 
   useEffect(() => {

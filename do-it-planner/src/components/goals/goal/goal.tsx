@@ -5,6 +5,8 @@ import { ProgressBarRectangular } from '../../progress-bar/progress-bar-rectangu
 import { Button } from '../../buttons/button';
 import { Tooltip } from '../../tooltip/tooltip';
 
+import { subTaskProps } from '../kanban/kanban';
+
 import { capitalizeFirstLetter } from '../../../services/utils/text';
 import { getDate } from '../../../services/utils/date';
 
@@ -13,7 +15,7 @@ import SubtaskIcon from '../../../assets/icons/tasks.svg';
 
 import './goal.scss';
 
-type GoalProps = {
+export type GoalProps = {
   goal: any;
   removeGoal?: any;
   onClick?: any;
@@ -21,6 +23,7 @@ type GoalProps = {
   isActive?: boolean;
   hasProgressBar: boolean;
 };
+
 const Goal = ({
   goal,
   removeGoal,
@@ -52,7 +55,9 @@ const Goal = ({
       return 0;
     }
 
-    return goal.subgoals.filter((subgoal) => subgoal.phase === 'done').length;
+    return goal.subgoals.filter(
+      (subgoal: subTaskProps) => subgoal.phase === 'done'
+    ).length;
   };
 
   const progressBarValueInPercent = () => {

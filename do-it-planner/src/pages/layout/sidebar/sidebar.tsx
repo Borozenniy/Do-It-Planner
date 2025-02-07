@@ -3,7 +3,7 @@ import { SidebarLinks } from './sidebar-links/sidebar-links';
 import { User } from '../../../components/user/user';
 import { Button } from '../../../components/buttons/button';
 import { LogOutButton } from '../../../components/buttons/logout-button/logout-button';
-import { ThemeSwitcher } from '../../../components/theme-switcher/theme-switcher/theme-switcher';
+import { ThemeSwitcher } from '../../../components/theme-switcher/theme-switcher';
 
 import OpenSidebarIconWhite from '../../../assets/icons/arrow-right-white.svg';
 import OpenSidebarIcon from '../../../assets/icons/arrow-right.svg';
@@ -77,9 +77,12 @@ const Sidebar = ({ setIsSidebarClosed, isSidebarClosed }: any) => {
       <ThemeSwitcher />
       <div className='sidebar__logout'>
         {isSidebarClosed ? (
-          <LogOutButton currentTheme={currentTheme} onlyIcon={true} />
+          <LogOutButton
+            currentTheme={currentTheme as 'dark' | 'light'}
+            onlyIcon={true}
+          />
         ) : (
-          <LogOutButton currentTheme={currentTheme} />
+          <LogOutButton currentTheme={currentTheme as 'dark' | 'light'} />
         )}
       </div>
     </div>

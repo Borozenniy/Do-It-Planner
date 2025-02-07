@@ -4,6 +4,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Button } from '../buttons/button';
 import { Goal } from './goal/goal';
 import { getGoals, createGoal, deleteGoal } from '../../services/api/user';
+
+import { GoalProps } from './goal/goal';
 import { InfoIcon } from '../icon/info-icon/info-icon';
 
 import CloseIcon from '../../assets/icons/close.png';
@@ -13,7 +15,8 @@ import './goals.scss';
 type Goal = {
   label: string;
   id: number;
-  highPriority?: boolean;
+  highPriority: boolean;
+  progressbar: boolean;
 };
 
 const Goals = () => {
@@ -195,6 +198,7 @@ const Goals = () => {
                   <Goal
                     key={goal.id}
                     goal={goal}
+                    hasProgressBar={goal.progressbar}
                     highPriority
                     removeGoal={removeGoal}
                   />
@@ -202,7 +206,13 @@ const Goals = () => {
               {goals
                 .filter((goal) => goal.highPriority === false)
                 .map((goal) => (
-                  <Goal key={goal.id} goal={goal} removeGoal={removeGoal} />
+                  <Goal
+                    key={goal.id}
+                    goal={goal}
+                    highPriority={false}
+                    hasProgressBar={false}
+                    removeGoal={removeGoal}
+                  />
                 ))}
             </div>
           )}

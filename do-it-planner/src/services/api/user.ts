@@ -51,7 +51,7 @@ export const getGoals = async (user: any) => {
 
 export const createGoal = async (goal: any) => {
   try {
-    const response = await fetch(`${BASE_URL}.app/goal/create-goal`, {
+    const response = await fetch(`${BASE_URL}/goal/create-goal`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

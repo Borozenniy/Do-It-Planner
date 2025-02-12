@@ -4,7 +4,7 @@ Also priority system and progress bar for more easily understanding, planning an
 ### Clone and Deploy
 
 ```bash
-(https://github.com/Borozenniy/Do-It-Planner/tree/main)
+git clone https://github.com/Borozenniy/Do-It-Planner/tree/main
 ```
 
 # 🔗 [DEMO](https://do-it-planner.vercel.app)  

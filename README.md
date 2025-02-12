@@ -1,5 +1,5 @@
-# App
-Do-It Planner - it's an application for goal management with possibility to add different type of management system (Kanban, Eisenhower matrix) to your goals and subtasks.
+# Do It Planner
+Do It Planner - it's an application for goal management with possibility to add different type of management system (Kanban, Eisenhower matrix) to your goals and subtasks.
 Also priority system and progress bar for more easily understanding, planning and comparing.
 # 🔗 [DEMO](https://do-it-planner.vercel.app)  
 

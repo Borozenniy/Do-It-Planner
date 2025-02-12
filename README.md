@@ -17,9 +17,8 @@ git clone https://github.com/Borozenniy/Do-It-Planner/tree/main
 3. Create .env or use .env.example and add value
     - PORT=3000
     - MONGO_URI=mongodb+srv://your-db-url
-4. ```bash
-    npm run dev
-```
+4. npm run dev
+
 
 ### 🎨 Frontend 
 1. Go to /frontend - "cd frontend"

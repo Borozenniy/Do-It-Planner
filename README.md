@@ -22,9 +22,9 @@ Also priority system and progress bar for more easily understanding, planning an
 2. Install dependencies - npm install
 3. Create .env or use .env.example and add values
   - VITE_DOMAIN="your.auth0.com"
-  - VITE_CLIENT_ID="your clien id"
+  - VITE_CLIENT_ID="your client id"
   - VITE_BACKEND_URL="your backend url if u have one"
-  - VITE_BACKEND_LOCAL_URL=http://localhost:3000 or port which you added to backend
+  - VITE_BACKEND_LOCAL_URL="http://localhost:3000" or port which you added to backend
 4. npm run dev 
 
 ## 🛠 Technical stack

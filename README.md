@@ -34,6 +34,7 @@ git clone https://github.com/Borozenniy/Do-It-Planner/tree/main
 
 ### 🎨 Frontend
 - React + Vite
+- Typescript
 
 ### 🔧 Backend
 - Node.js + Express

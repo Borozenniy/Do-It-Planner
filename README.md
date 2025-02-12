@@ -4,6 +4,8 @@ Also priority system and progress bar for more easily understanding, planning an
 # 🔗 [App](https://do-it-planner.vercel.app)  
 
 ## ⚙️ How to install
+> [!NOTE]
+> ⚙️ How to install
 
 ### 🔧 Backend
 1. Go to /backend - "cd backend"

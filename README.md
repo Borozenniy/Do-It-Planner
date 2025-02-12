@@ -12,7 +12,7 @@ git clone https://github.com/Borozenniy/Do-It-Planner/tree/main
 ```
 
 ### 🔧 Backend
-1. Go to /backend - "cd backend"
+1. Go to backend folder - "cd backend"
 2. Install dependencies - npm install
 3. Create .env or use .env.example and add values
     - PORT=3000
@@ -21,7 +21,7 @@ git clone https://github.com/Borozenniy/Do-It-Planner/tree/main
 
 
 ### 🎨 Frontend 
-1. Go to /frontend - "cd frontend"
+1. Go to frontend folder - "cd frontend"
 2. Install dependencies - npm install
 3. Create .env or use .env.example and add values
   - VITE_DOMAIN="your.auth0.com"

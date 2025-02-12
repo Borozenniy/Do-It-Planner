@@ -13,10 +13,6 @@ Also priority system and progress bar for more easily understanding, planning an
     - MONGO_URI=mongodb+srv://your-db-url
 4. npm run dev
 
-
-> [!TIP]
-> Helpful advice for doing things better or more easily.
-
 ### 🎨 Frontend 
 1. Go to /frontend - "cd frontend"
 2. Install dependencies - npm install

@@ -1,15 +1,15 @@
 # App
 Do-It Planner - it's an application for goal management with possibility to add different type of management system (Kanban, Eisenhower matrix) to your goals and subtasks.
 Also priority system and progress bar for more easily understanding, planning and comparing.
-### Clone and Deploy
+# 🔗 [DEMO](https://do-it-planner.vercel.app)  
+
+## ⚙️ How to install
+
+### Clone
 
 ```bash
 git clone https://github.com/Borozenniy/Do-It-Planner/tree/main
 ```
-
-# 🔗 [DEMO](https://do-it-planner.vercel.app)  
-
-## ⚙️ How to install
 
 ### 🔧 Backend
 1. Go to /backend - "cd backend"
@@ -17,7 +17,9 @@ git clone https://github.com/Borozenniy/Do-It-Planner/tree/main
 3. Create .env or use .env.example and add value
     - PORT=3000
     - MONGO_URI=mongodb+srv://your-db-url
-4. npm run dev
+4. ```bash
+    npm run dev
+```
 
 ### 🎨 Frontend 
 1. Go to /frontend - "cd frontend"

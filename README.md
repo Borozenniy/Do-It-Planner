@@ -14,7 +14,7 @@ git clone https://github.com/Borozenniy/Do-It-Planner/tree/main
 ### 🔧 Backend
 1. Go to /backend - "cd backend"
 2. Install dependencies - npm install
-3. Create .env or use .env.example and add value
+3. Create .env or use .env.example and add values
     - PORT=3000
     - MONGO_URI=mongodb+srv://your-db-url
 4. npm run dev

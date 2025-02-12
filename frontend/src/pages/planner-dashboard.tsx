@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { getGoals } from '../services/api/user';
 import { Kanban } from '../components/kanban/kanban';
+import { EisenhowerMatrix } from '../components/eisenhower-matrix/eisenhower-matrix';
 import { Button } from '../components/buttons/button';
 import { Goal } from '../components/goals/goal/goal';
 import { Tooltip } from '../components/tooltip/tooltip';
 import { DragAndDropTip } from '../components/tips/drap-and-drop/drag-and-drop-tip';
+
+import { getGoals } from '../services/api/user';
 
 import KanbanIcon from '../assets/icons/kanban.png';
 import MatrixIcon from '../assets/icons/matrix.png';
@@ -41,7 +43,7 @@ const PlannerDashboard = () => {
             label='This functionality is not available yet and i will add it soon'
           >
             <Button
-              disabled={true}
+              //disabled={true}
               label='Eisenhower matrix'
               size='large'
               onClick={() => setMode('eisenhower')}
@@ -65,7 +67,7 @@ const PlannerDashboard = () => {
               label='This functionality is not available yet and i will add it soon'
             >
               <Button
-                disabled={true}
+                //disabled={true}
                 label='Eisenhower matrix'
                 size='large'
                 onClick={() => setMode('eisenhower')}
@@ -183,13 +185,17 @@ const PlannerDashboard = () => {
           </div>
         </div>
         <div className='planner-dashboard__board'>
-          {mode === 'kanban' && selectedGoal ? (
+          {mode === 'kanban' && selectedGoal && (
             <Kanban
               selectedGoal={selectedGoal}
               setSelectedGoal={setSelectedGoal}
             />
-          ) : (
-            <div className='planner-dashboard__no-goal-picked'></div>
+          )}
+          {mode === 'eisenhower' && selectedGoal && (
+            <EisenhowerMatrix
+              selectedGoal={selectedGoal}
+              setSelectedGoal={setSelectedGoal}
+            />
           )}
         </div>
       </div>

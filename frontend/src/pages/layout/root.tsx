@@ -11,51 +11,47 @@ import { createUser } from '../../services/api/user';
 
 const Root = () => {
   const [isSidebarClosed, setIsSidebarClosed] = useState(true);
-  const { user, isAuthenticated } = useAuth0();
+  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const navigate = useNavigate();
 
   const createAccount = async () => {
-    const userData = {
-      name: user?.name,
-      email: user?.email,
-      id: Date.now(),
-    };
-    await createUser(userData);
+    if (!user) return;
+
+    try {
+      const token = await getAccessTokenSilently(); // token
+      console.log('Token:', token);
+
+      const response = await fetch(`http://localhost:3000/users/${user.sub}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 404) {
+        await fetch(`http://localhost:3000/users`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            id: user.sub,
+            name: user.name,
+            email: user.email,
+          }),
+        });
+      }
+    } catch (error) {
+      console.error('Error checking/creating user:', error);
+    }
+    //const userData = {
+    //  name: user?.name,
+    //  email: user?.email,
+    //  createdDate: Date.now(),
+    //};
+    //await createUser(userData);
   };
-
-  //const createUser = async () => {
-  //  const userData = {
-  //    name: user?.name,
-  //    email: user?.email,
-  //    id: Date.now(),
-  //  };
-  //  console.log('userData:', userData);
-  //  try {
-  //    const response = await fetch(
-  //      'https://test-vercel-chi-three.vercel.app/users/create-user',
-  //      {
-  //        method: 'POST',
-  //        headers: {
-  //          'Content-Type': 'application/json',
-  //        },
-  //        body: JSON.stringify(userData),
-  //      }
-  //    );
-
-  //    //if (!response.ok) {
-  //    //  throw new Error('Помилка створення користувача');
-  //    //}
-
-  //    const data = await response.json();
-  //    console.log('Користувач створений:', data);
-  //  } catch (error) {
-  //    if (error instanceof Error) {
-  //      console.error('Помилка:', error.message);
-  //    } else {
-  //      console.error('Unexpected error:', error);
-  //    }
-  //  }
-  //};
 
   useEffect(() => {
     if (user) createAccount();

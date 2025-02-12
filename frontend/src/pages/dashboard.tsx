@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense, lazy } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { KanbanSidebar } from '../components/kanban/kanban-sidebar/kanban-sidebar';
 import { Button } from '../components/buttons/button';
 import { Tooltip } from '../components/tooltip/tooltip';
 import { Goal } from '../components/goals/goal/goal';
 import { AddGoalTip } from '../components/tips/add-goal-tip/add-goal-tip';
+//import { GoalsList } from '../components/goals/goals-list/goals-list';
 
 import { GoalProps } from '../components/goals/goal/goal';
 
@@ -17,8 +18,13 @@ import KanbanMeme from '../assets/image/kanban-meme.png';
 
 import './styles/dashboard.scss';
 
+const GoalsList = lazy(
+  () => import('../components/goals/goals-list/goals-list')
+);
+
 const Dashboard = () => {
-  const { user } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
+  const token = getAccessTokenSilently().then((token) => token);
   const [goals, setGoals] = useState<GoalProps[]>([]);
   const [selectedGoal, setSelectedGoal] = useState<GoalProps>();
   const [mode, setMode] = useState<string>('none');
@@ -26,6 +32,7 @@ const Dashboard = () => {
 
   const showedAddGoalTip = localStorage.getItem('addGoalTip') === 'showed';
 
+  console.log(token);
   const fetchGoals = async () => {
     const goalsData = await getGoals(user);
     setGoals(goalsData);
@@ -110,6 +117,15 @@ const Dashboard = () => {
         </div>
         <div className='dashboard__goals'>
           <div className='dashboard__goals-container'>
+            {/*<Suspense fallback={<div>Loading...</div>}>
+              <GoalsList
+                selectedGoal={selectedGoal}
+                setSelectedGoal={setSelectedGoal}
+                removeGoal={removeGoal}
+                goals={goals}
+                search={search}
+              />
+            </Suspense>*/}
             <div className='dashboard__goals-content'>
               {goals.length === 0 && <AddGoalTip />}
               {goals &&
@@ -165,7 +181,6 @@ const Dashboard = () => {
                   ))}
             </div>
           </div>
-          {/*</div>*/}
         </div>
         <div className='dashboard__sidebar'>
           <div className='dashboard__sidebar-container'>

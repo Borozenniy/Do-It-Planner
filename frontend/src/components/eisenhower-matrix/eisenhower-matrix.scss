@@ -1,0 +1,63 @@
+.eisenhower-matrix {
+  height: 100%;
+  //width: 100%;
+  margin: 5px;
+  background: var(--surface-10);
+  border-radius: 8px;
+  overflow: hidden;
+
+  &__container {
+    height: 100%;
+  }
+
+  &__board {
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeart(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+
+    grid-template-areas:
+      'urgent-important urgent-non-important'
+      'non-urgent-important non-urgent-non-important';
+  }
+
+  &__title {
+    margin-top: 3px;
+    //display: flex;
+    //justify-content: center;
+    //align-items: center;
+    font-size: 18px;
+    padding: 5px 5px 10px 5px;
+    background-color: var(--surface-10);
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    span {
+      padding-right: 7px;
+    }
+  }
+
+  &__block {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    color: var(--text-color);
+    &--urgent-important {
+      grid-area: urgent-important;
+      background-color: var(--surface-20);
+    }
+    &--urgent-non-important {
+      grid-area: urgent-non-important;
+      background-color: var(--surface-20);
+    }
+    &--non-urgent-important {
+      grid-area: non-urgent-important;
+      background-color: var(--surface-20);
+    }
+    &--non-urgent-non-important {
+      grid-area: non-urgent-non-important;
+      background-color: var(--surface-20);
+    }
+  }
+}

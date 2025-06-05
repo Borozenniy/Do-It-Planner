@@ -10,6 +10,7 @@ import { AddGoalTip } from '../components/tips/add-goal-tip/add-goal-tip';
 import { GoalProps } from '../components/goals/goal/goal';
 
 import { getGoals, changeGoalMode, deleteGoal } from '../services/api/user';
+import { getTasks } from '../services/api/subtask';
 
 import KanbanIcon from '../assets/icons/kanban.png';
 import MatrixIcon from '../assets/icons/matrix.png';
@@ -18,39 +19,67 @@ import KanbanMeme from '../assets/image/kanban-meme.png';
 
 import './styles/dashboard.scss';
 
-const GoalsList = lazy(
-  () => import('../components/goals/goals-list/goals-list')
-);
+//const GoalsList = lazy(
+//  () => import('../components/goals/goals-list/goals-list')
+//);
 
 const Dashboard = () => {
   const { user, getAccessTokenSilently } = useAuth0();
-  const token = getAccessTokenSilently().then((token) => token);
+  //const token = getAccessTokenSilently({ detailedResponse: false }).then(
+  //  (token) => token
+  //);
   const [goals, setGoals] = useState<GoalProps[]>([]);
+  const [tasks, setTasks] = useState<any[]>([]);
   const [selectedGoal, setSelectedGoal] = useState<GoalProps>();
   const [mode, setMode] = useState<string>('none');
   const [search, setSearch] = useState<string>('');
 
   const showedAddGoalTip = localStorage.getItem('addGoalTip') === 'showed';
 
-  console.log(token);
+  const handleSelectGoal = (goal: GoalProps) => {
+    if (goal.id === selectedGoal?.id) return;
+    setSelectedGoal(goal);
+    fetchTasks(goal.id);
+  };
+
   const fetchGoals = async () => {
-    const goalsData = await getGoals(user);
+    const token = await getAccessTokenSilently({
+      detailedResponse: false,
+    });
+    const goalsData = await getGoals(token, user);
     setGoals(goalsData);
+  };
+
+  const fetchTasks = async (id: string) => {
+    const token = await getAccessTokenSilently({
+      detailedResponse: false,
+    });
+
+    const result = await getTasks(token, id);
+    if (result.status === 'success') {
+      setTasks(result.tasks);
+    }
   };
 
   const chooseKanbanMode = () => {
     setMode('kanban');
-    handleChangeGoalMode('kanban');
+    if (selectedGoal?.id) {
+      handleChangeGoalMode(selectedGoal.id, 'kanban');
+    }
   };
 
-  const handleChangeGoalMode = async (manageMode?: string) => {
-    console.log(mode);
-    const goalData = {
-      email: user?.email,
-      id: selectedGoal?.id,
-      mode: manageMode,
-    };
-    const result = await changeGoalMode(goalData);
+  const handleChangeGoalMode = async (id: string, manageMode: string) => {
+    const token = await getAccessTokenSilently({
+      detailedResponse: false,
+    });
+
+    //const goalData = {
+    //  email: user?.email,
+    //  id: selectedGoal?.id,
+    //  mode: manageMode,
+    //};
+    console.log(id, manageMode);
+    const result = await changeGoalMode(token, id, manageMode);
     if (result.status === 'success') {
       fetchGoals();
       setSelectedGoal((prev) =>
@@ -61,16 +90,20 @@ const Dashboard = () => {
     }
   };
 
-  const removeGoal = async (goalId: number) => {
-    if (user?.email && goalId) {
-      const goalData = {
-        email: user.email,
-        id: goalId,
-      };
-      await deleteGoal(goalData);
-      await fetchGoals();
-    }
-    setSelectedGoal(undefined);
+  const removeGoal = async (goalId: string) => {
+    console.log(goalId);
+    const token = await getAccessTokenSilently({
+      detailedResponse: false,
+    });
+    //if (user?.email && goalId) {
+    //  //const goalData = {
+    //  //  email: user.email,
+    //  //  id: goalId,
+    //  //};
+    await deleteGoal(token, goalId);
+    await fetchGoals();
+    //}
+    //setSelectedGoal(undefined);
   };
 
   useEffect(() => {
@@ -81,6 +114,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     setMode('none');
+    if (selectedGoal?.id) fetchTasks(selectedGoal.id);
 
     if (goals.length > 0 && showedAddGoalTip !== true) {
       localStorage.setItem('addGoalTip', 'showed');
@@ -127,7 +161,7 @@ const Dashboard = () => {
               />
             </Suspense>*/}
             <div className='dashboard__goals-content'>
-              {goals.length === 0 && <AddGoalTip />}
+              {/*{goals?.length || (goals.length === 0 && <AddGoalTip />)}*/}
               {goals &&
                 search !== '' &&
                 goals
@@ -141,7 +175,7 @@ const Dashboard = () => {
                       removeGoal={removeGoal}
                       progressbar={goal.progressbar}
                       isActive={selectedGoal?.id === goal.id}
-                      onClick={() => setSelectedGoal(goal)}
+                      onClick={() => handleSelectGoal(goal)}
                       highPriority={goal.highPriority}
                     />
                   ))}
@@ -159,7 +193,7 @@ const Dashboard = () => {
                           progressbar={goal.progressbar}
                           removeGoal={removeGoal}
                           isActive={selectedGoal?.id === goal.id}
-                          onClick={() => setSelectedGoal(goal)}
+                          onClick={() => handleSelectGoal(goal)}
                         />
                       ))}
                   </div>
@@ -176,7 +210,7 @@ const Dashboard = () => {
                       highPriority={goal.highPriority}
                       progressbar={goal.progressbar}
                       isActive={selectedGoal?.id === goal.id}
-                      onClick={() => setSelectedGoal(goal)}
+                      onClick={() => handleSelectGoal(goal)}
                     />
                   ))}
             </div>
@@ -184,8 +218,9 @@ const Dashboard = () => {
         </div>
         <div className='dashboard__sidebar'>
           <div className='dashboard__sidebar-container'>
-            {selectedGoal?.subgoals && selectedGoal.mode === 'kanban' ? (
+            {selectedGoal?.mode === 'kanban' ? (
               <KanbanSidebar
+                selectedTasks={tasks}
                 selectedGoal={selectedGoal}
                 setSelectedGoal={setSelectedGoal}
               />

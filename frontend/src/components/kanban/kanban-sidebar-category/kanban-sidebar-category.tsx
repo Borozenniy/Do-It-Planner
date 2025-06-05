@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, Suspense } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { ModalContext } from '../../modal/modal-provider';
 import { ToastContext } from '../../toast/toast-provider';
@@ -14,6 +14,7 @@ import { getGoals } from '../../../services/api/user';
 import {
   changeSubtaskPhase,
   removeSubtask,
+  getTasks,
 } from '../../../services/api/subtask';
 
 import ArrowDownIcon from '../../../assets/icons/arrow-down.png';
@@ -33,105 +34,83 @@ interface KanbanSidebarCategoryProps {
   selectedGoal: any;
   setSelectedGoal: any;
   label: string;
-  subgoals: subTaskProps[];
+  tasks: subTaskProps[];
 }
 
 function KanbanSidebarCategory({
   selectedGoal,
   setSelectedGoal,
   label,
-  subgoals,
+  tasks,
 }: KanbanSidebarCategoryProps) {
-  const { user } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
   const { openModal, closeModal } = useContext(ModalContext) as any;
   const { addToast } = useContext(ToastContext) as AddToastType;
   const [isOpen, setIsOpen] = useState(false);
   const [subTasks, setSubTasks] = useState<subTaskProps[]>([]);
+  //console.log(tasks);
 
-  //const updateGoal = async () => {
-  //  const goalsData = await getGoals(user);
-  //  //const goal = goalsData.filter((goal) => goal.id === selectedGoal.id);
-  //  //if (goal.length > 0) {
-  //  //  setSelectedGoal(goal[0]);
-  //  //}
-  //  const goal = goalsData.find((goal) => goal.id === selectedGoal.id);
-  //  if (goal) {
-  //    setSelectedGoal({ ...goal });
-  //  }
-  //};
+  const updateGoal = async () => {
+    const token = await getAccessTokenSilently({
+      detailedResponse: false,
+    });
+    const goalsData = await getGoals(token);
+    const goal = goalsData.find((goal) => goal.id === selectedGoal.id);
+    if (goal) setSelectedGoal(goal);
+  };
+
+  const fetchTasks = async () => {
+    const token = await getAccessTokenSilently({
+      detailedResponse: false,
+    });
+
+    const result = await getTasks(token, selectedGoal.id);
+    if (result.status === 'success') {
+      console.log('success');
+      //setSubTasks(result.subgoal);
+      setSubTasks(result.tasks);
+      //console.log(result.tasks);
+    }
+  };
 
   const handleRaisePhase = (subTask: subTaskProps) => {
     const subtaskRaisedPhase = raisePhase(subTask.phase);
     handleChangeSubtaskPhase(subTask.id, subtaskRaisedPhase);
-    setSubTasks((prevSubTasks) =>
-      prevSubTasks.map((task) => {
-        if (task.id === subTask.id) {
-          let nextPhase: subTaskProps['phase'];
-          if (task.phase === 'to do') nextPhase = 'in progress';
-          else if (task.phase === 'in progress') nextPhase = 'done';
-          else nextPhase = 'done';
-          return { ...task, phase: nextPhase };
-        }
-        return task;
-      })
-    );
   };
 
   const handleDecreasePhase = (subTask: subTaskProps) => {
     const subtaskDecreasedPhase = decreasePhase(subTask.phase);
     handleChangeSubtaskPhase(subTask.id, subtaskDecreasedPhase);
-    setSubTasks((prevSubTasks) =>
-      prevSubTasks.map((task) => {
-        if (task.id === subTask.id) {
-          let nextPhase: subTaskProps['phase'];
-          if (task.phase === 'done') nextPhase = 'in progress';
-          else if (task.phase === 'in progress') nextPhase = 'to do';
-          else nextPhase = 'to do';
-          return { ...task, phase: nextPhase };
-        }
-        return task;
-      })
-    );
   };
 
   const handleChangeSubtaskPhase = async (
-    subtaskId: number,
+    subtaskId: string,
     phase: subTaskProps['phase']
   ) => {
-    const subtaskData = {
-      email: user?.email,
-      goalId: selectedGoal.id,
-      subgoalId: subtaskId,
+    const token = await getAccessTokenSilently({
+      detailedResponse: false,
+    });
+    const taskData = {
+      id: subtaskId,
       phase: phase,
     };
-    const result = await changeSubtaskPhase(subtaskData);
-    console.log(result);
+    const result = await changeSubtaskPhase(token, selectedGoal.id, taskData);
     if (result.status === 'success') {
+      //console.log(result);
       updateGoal();
+      //fetchTasks();
     } else {
-      console.log(result.status);
+      //console.log(result.status);
       //updateGoal();
     }
   };
 
-  const updateGoal = async () => {
-    const goalsData = await getGoals(user);
-    console.log(goalsData);
-    const goal = goalsData.filter(
-      (goal: GoalProps) => goal.id === selectedGoal.id
-    );
-    if (goal.length > 0) {
-      setSelectedGoal(goal[0]);
-    }
-  };
   const deleteSubTask = async (subTask: subTaskProps) => {
-    const subtaskData = {
-      email: user?.email,
-      goalId: selectedGoal.id,
-      subgoalId: subTask.id,
-    };
+    const token = await getAccessTokenSilently({
+      detailedResponse: false,
+    });
 
-    const result = await removeSubtask(subtaskData);
+    const result = await removeSubtask(token, selectedGoal.id, subTask.id);
     if (result.status === 'success') {
       updateGoal();
       removeSubtaskSuccessToast();
@@ -180,12 +159,9 @@ function KanbanSidebarCategory({
   };
 
   useEffect(() => {
-    if (subgoals.length > 0) {
-      setSubTasks(subgoals);
-    }
-    //setSubTasks([...subgoals]);
-    console.log(selectedGoal.subgoals);
-  }, [subgoals, selectedGoal]);
+    //fetchTasks();
+    setSubTasks(tasks);
+  }, [selectedGoal, tasks]);
 
   return (
     <div className='kanban-sidebar-category'>
@@ -222,11 +198,11 @@ function KanbanSidebarCategory({
         }`}
       >
         {subTasks
-          .filter((subgoals) => subgoals.phase === label)
-          .map((subgoal) => (
+          .filter((tasks) => tasks.phase === label)
+          .map((task) => (
             <Subtask
-              key={subgoal.id}
-              subtask={subgoal}
+              key={task.id}
+              subtask={task}
               decreasePhase={handleDecreasePhase}
               raisePhase={handleRaisePhase}
               deleteSubtask={deleteSubTask}

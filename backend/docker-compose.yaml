@@ -2,11 +2,24 @@ version: '3'
 services:
   db:
     image: postgres
+    container_name: postgres_db
+    restart: always
     environment:
       POSTGRES_PASSWORD: password123
       POSTGRES_USER: user123
       POSTGRES_DB: Planner
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
   app:
-    image: my-node-app
+    build: .
+    depends_on:
+      - db
+    environment:
+      POSTGRES_URL: postgresql://user123:password123@db:5432/Planner
+      POSTGRES_PASSWORD: password123
+      POSTGRES_USER: user123
+      POSTGRES_DB: Planner
     ports:
       - 13000:3000

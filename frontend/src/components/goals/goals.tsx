@@ -18,35 +18,39 @@ type Goal = {
 };
 
 const Goals = () => {
-  const { user } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
   const { addToast } = useContext(ToastContext) as any;
   const [goals, setGoals] = useState<Goal[]>([]);
   const [goalLabel, setGoalLabel] = useState<string>('');
   const [hasProgressBar, setHasProgressBar] = useState<boolean>(false);
   const [highPriority, setHighPriority] = useState<boolean>(false);
 
+  //const token = getAccessTokenSilently({
+  //  detailedResponse: false,
+  //});
+  //console.log('Token:', token);
+
   const isEmptyGoal = () => {
     return goalLabel.length === 0;
   };
   const addGoal = () => {
-    if (isEmptyGoal()) {
-      return;
-    } else {
-      addNewGoal();
-    }
+    if (isEmptyGoal()) return;
+
+    addNewGoal();
   };
 
   const addNewGoal = async () => {
-    const goal = {
-      email: user?.email,
-      goalData: {
-        name: goalLabel,
-        id: Date.now(),
-        progressbar: hasProgressBar,
-        highPriority: highPriority,
-      },
+    const token = await getAccessTokenSilently({
+      detailedResponse: false,
+    });
+
+    const goalData = {
+      name: goalLabel,
+      progressbar: hasProgressBar,
+      highPriority: highPriority,
+      mode: 'none',
     };
-    await createGoal(goal);
+    await createGoal(token, goalData);
     if (goals.length === 0) {
       addedFirstGoalSuccessToast();
     } else {
@@ -63,8 +67,12 @@ const Goals = () => {
   };
 
   const fetchGoals = async () => {
+    const token = await getAccessTokenSilently({
+      detailedResponse: false,
+    });
+
     try {
-      const goalsData = await getGoals(user);
+      const goalsData = await getGoals(token);
       setGoals(goalsData);
     } catch (error) {
       if (error instanceof Error) {
@@ -75,13 +83,12 @@ const Goals = () => {
     }
   };
 
-  const removeGoal = async (goalId: number) => {
-    if (user?.email && goalId) {
-      const goalData = {
-        email: user.email,
-        id: goalId,
-      };
-      await deleteGoal(goalData);
+  const removeGoal = async (goalId: string) => {
+    if (user && goalId) {
+      const token = await getAccessTokenSilently({
+        detailedResponse: false,
+      });
+      await deleteGoal(token, goalId);
       await fetchGoals();
     }
   };

@@ -1,27 +1,48 @@
 {
   "name": "do-it-planner-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
+    "tsx": "tsx ./index.ts",
+    "build": "tsc --build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node api/index.ts",
-    "dev": "nodemon index.js"
+    "start": "node src/index.ts",
+    "start:ts": "tsx src/index.ts",
+    "dev": "nodemon index.js",
+    "ts": "ts-node",
+    "drizzle:gen": "drizzle-kit generate",
+    "drizzle:migrate": "drizzle-kit migrate",
+    "drizzle:push": "drizzle-kit push",
+    "drizzle:pull": "drizzle-kit pull",
+    "drizzle:drop": "drizzle-kit drop"
   },
   "keywords": [],
   "author": "Serhii Borozennyi",
   "license": "ISC",
   "dependencies": {
+    "@vercel/postgres": "^0.10.0",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.40.1",
     "express": "^4.21.2",
+    "express-oauth2-jwt-bearer": "^1.6.1",
+    "knex": "^3.1.0",
     "mongoose": "^8.10.0",
-    "nodemon": "^3.1.9",
-    "pg": "^8.13.2",
+    "pg": "^8.14.1",
     "pg-promise": "^11.10.2"
   },
   "devDependencies": {
-    "@types/node": "^22.13.1"
-  }
+    "@types/cors": "^2.8.17",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.14.0",
+    "@types/pg": "^8.11.11",
+    "drizzle-kit": "^0.30.6",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  },
+  "description": ""
 }

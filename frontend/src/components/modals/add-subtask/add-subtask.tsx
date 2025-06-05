@@ -14,45 +14,74 @@ import { createSubtask } from '../../../services/api/subtask';
 import CloseIcon from '../../../assets/icons/close.png';
 import './add-subtask.scss';
 
-type SubtaskType = {
-  email: string | undefined;
-  goalId: number;
+type taskType = {
+  //goalId: number;
   mode: 'kanban' | 'eisenhower';
-  subgoalData: {
+  taskData: {
     title: string;
     phase: 'to do' | 'in progress' | 'done';
-    priority: 'no priority' | 'low' | 'medium' | 'high';
-    id: number;
+    priority: PriorityType;
   };
 };
 
-const AddSubtask = ({ goalId, setSelectedGoal }: any) => {
-  const { user } = useAuth0();
+type AddSubtaskProps = {
+  goalId: string;
+  setSelectedGoal: any;
+  mode: 'kanban' | 'eisenhower';
+};
+
+type KanbanTaskProps = {
+  mode: 'kanban';
+  taskData: {
+    title: string;
+    phase: 'to do' | 'in progress' | 'done';
+    priority: 'no priority' | 'low' | 'medium' | 'high';
+  };
+};
+
+type EisenhowerTaskProps = {
+  mode: 'eisenhower';
+  taskData: {
+    title: string;
+    phase?: KanbanTaskProps['taskData']['phase'];
+    priority:
+      | 'urgent-important'
+      | 'urgent-non-important'
+      | 'non-urgent-important'
+      | 'non-urgent-non-important';
+  };
+};
+
+type PriorityType =
+  | KanbanTaskProps['taskData']['priority']
+  | EisenhowerTaskProps['taskData']['priority'];
+
+const AddSubtask = ({ goalId, setSelectedGoal, mode }: any) => {
+  const { user, getAccessTokenSilently } = useAuth0();
   const { closeModal } = useContext(ModalContext) as any;
   const { addToast } = useContext(ToastContext) as AddToastType;
-  const [title, setTitle] = useState<SubtaskType['subgoalData']['title']>('');
-  const [phase, setPhase] =
-    useState<SubtaskType['subgoalData']['phase']>('to do');
-  const [priority, setPriority] =
-    useState<SubtaskType['subgoalData']['priority']>('no priority');
+  const [title, setTitle] = useState<taskType['taskData']['title']>('');
+  const [phase, setPhase] = useState<taskType['taskData']['phase']>('to do');
+  const [priority, setPriority] = useState<PriorityType>(
+    mode === 'kanban' ? 'no priority' : 'urgent-important'
+  );
 
   const addSubtask = async () => {
     if (!title) return;
-    const newSubtask: SubtaskType = {
-      email: user?.email,
-      goalId: goalId,
-      mode: 'kanban',
-      subgoalData: {
+    const token = await getAccessTokenSilently({
+      detailedResponse: false,
+    });
+    const newTask: taskType = {
+      mode: mode,
+      taskData: {
         title: title,
         phase: phase,
         priority: priority,
-        id: Date.now(),
       },
     };
 
-    const result = await createSubtask(newSubtask);
+    const result = await createSubtask(token, goalId, newTask);
     if (result.status === 'success') {
-      console.log(result);
       closeModal();
       addSubtaskSuccessToast();
       updateGoal();
@@ -64,10 +93,14 @@ const AddSubtask = ({ goalId, setSelectedGoal }: any) => {
   };
 
   const updateGoal = async () => {
-    const goalsData = await getGoals(user);
+    const token = await getAccessTokenSilently({
+      detailedResponse: false,
+    });
+    const goalsData = await getGoals(token);
     const goal = goalsData.filter((goal: GoalProps) => goal.id === goalId);
     if (goal.length > 0) {
       setSelectedGoal(goal[0]);
+      console.log('new goal', goal);
     }
   };
 
@@ -89,7 +122,7 @@ const AddSubtask = ({ goalId, setSelectedGoal }: any) => {
   const cleanForm = () => {
     setTitle('');
     setPhase('to do');
-    setPriority('no priority');
+    setPriority(mode === 'kanban' ? 'no priority' : 'urgent-important');
   };
 
   useEffect(() => {
@@ -102,7 +135,7 @@ const AddSubtask = ({ goalId, setSelectedGoal }: any) => {
         <div className='subtask-form'>
           <div className='subtask-form__option subtask-form__option--title'>
             <div className='subtask-form__option-title'>
-              <span>Subtask title</span>
+              <span>Task title</span>
             </div>
             <div className='subtask-form__input-bar'>
               <input
@@ -119,35 +152,55 @@ const AddSubtask = ({ goalId, setSelectedGoal }: any) => {
             </div>
           </div>
           <div>
-            <div className='subtask-form__option subtask-form__option--phase'>
-              <div className='subtask-form__option-title'>
-                <span>Subtask phase</span>
+            {mode === 'kanban' && (
+              <div className='subtask-form__option subtask-form__option--phase'>
+                <div className='subtask-form__option-title'>
+                  <span>Phase</span>
+                </div>
+                <select
+                  value={phase}
+                  onChange={(e) =>
+                    setPhase(
+                      e.target.value as KanbanTaskProps['taskData']['phase']
+                    )
+                  }
+                >
+                  <option value='to do'>To do</option>
+                  <option value='in progress'>In progress</option>
+                  <option value='done'>Done</option>
+                </select>
               </div>
-              <select
-                value={phase}
-                onChange={(e) =>
-                  setPhase(e.target.value as subTaskProps['phase'])
-                }
-              >
-                <option value='to do'>To do</option>
-                <option value='in progress'>In progress</option>
-                <option value='done'>Done</option>
-              </select>
-            </div>
+            )}
             <div className='subtask-form__option subtask-form__option--priority'>
               <div className='subtask-form__option-title'>
-                <span>Subtask priority</span>
+                <span>Priority</span>
               </div>
               <select
                 value={priority}
-                onChange={(e) =>
-                  setPriority(e.target.value as subTaskProps['priority'])
-                }
+                onChange={(e) => setPriority(e.target.value as PriorityType)}
               >
-                <option value='No priority'>No priority</option>
-                <option value='low'>Low</option>
-                <option value='medium'>Medium</option>
-                <option value='high'>High</option>
+                {mode === 'kanban' && (
+                  <>
+                    <option value='No priority'>No priority</option>
+                    <option value='low'>Low</option>
+                    <option value='medium'>Medium</option>
+                    <option value='high'>High</option>
+                  </>
+                )}
+                {mode === 'eisenhower' && (
+                  <>
+                    <option value='urgent-important'>Urgent | Important</option>
+                    <option value='urgent-non-important'>
+                      Urgent | Not Importand
+                    </option>
+                    <option value='non-urgent-important'>
+                      Non urgent | Important
+                    </option>
+                    <option value='non-urgent-non-important'>
+                      Non urgent | Not Important
+                    </option>
+                  </>
+                )}
               </select>
             </div>
           </div>
@@ -157,7 +210,7 @@ const AddSubtask = ({ goalId, setSelectedGoal }: any) => {
           <textarea></textarea>
         </div>*/}
         <div className='add-subtask__buttons'>
-          <Button label='Add subtask' onClick={addSubtask} disabled={!title} />
+          <Button label='Add task' onClick={addSubtask} disabled={!title} />
         </div>
       </div>
     </div>

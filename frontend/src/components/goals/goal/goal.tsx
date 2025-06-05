@@ -16,7 +16,7 @@ import SubtaskIcon from '../../../assets/icons/tasks.svg';
 import './goal.scss';
 
 export type GoalProps = {
-  id?: number;
+  id?: string;
   name?: string;
   goal: any;
   removeGoal?: any;
@@ -113,7 +113,7 @@ const Goal = ({
                 <div className='goal__sign'>{goal.mode[0].toUpperCase()}</div>
               </Tooltip>
             )}
-            {goal.subgoals.length > 0 && (
+            {/*{goal.subgoals.length > 0 && (
               <Tooltip
                 label={`${goal.subgoals.length} ${
                   goal.subgoals.length > 1 ? 'subgoals' : 'subgoal'
@@ -124,7 +124,7 @@ const Goal = ({
                   <img src={SubtaskIcon} alt='' />
                 </div>
               </Tooltip>
-            )}
+            )}*/}
             {/*{hasProgressBar && (
               <div>
                 <div>

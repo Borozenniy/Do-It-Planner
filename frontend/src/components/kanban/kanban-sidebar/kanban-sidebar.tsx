@@ -8,17 +8,19 @@ import { subTaskProps } from '../kanban';
 import './kanban-sidebar.scss';
 
 type KanbanSidebarProps = {
+  selectedTasks: any;
   selectedGoal: any;
   setSelectedGoal: any;
 };
 
 const kanbanCategories = ['to do', 'in progress', 'done'];
 const KanbanSidebar = ({
+  selectedTasks,
   selectedGoal,
   setSelectedGoal,
 }: KanbanSidebarProps) => {
   const navigate = useNavigate();
-  const doneSubgoals = selectedGoal.subgoals.filter(
+  const doneTasks = selectedTasks.filter(
     (subgoal: subTaskProps) => subgoal.phase === 'done'
   ).length;
 
@@ -26,20 +28,21 @@ const KanbanSidebar = ({
     navigate('/app/planner');
   };
 
-  useEffect(() => {
-    console.log(selectedGoal.subgoals);
-  }, [selectedGoal]);
+  //useEffect(() => {
+  //  console.log(selectedGoal.subgoals);
+  //}, [selectedGoal]);
 
   return (
     <div className='kanban-sidebar'>
       <div className='kanban-sidebar__information'>
         <div className='kanban-sidebar__information-content'>
-          {selectedGoal.subgoals.length > 0 ? (
+          {/*{selectedGoal.subgoals.length > 0 ? (*/}
+          {selectedTasks.length > 0 ? (
             <>
               <div className='kanban-sidebar__subgoals-information'>
                 <ProgressBar
-                  maxValue={selectedGoal.subgoals.length}
-                  value={doneSubgoals || 0}
+                  maxValue={selectedTasks.length}
+                  value={doneTasks || 0}
                 />
                 <div></div>
               </div>
@@ -59,7 +62,7 @@ const KanbanSidebar = ({
             setSelectedGoal={setSelectedGoal}
             key={category}
             label={category}
-            subgoals={selectedGoal.subgoals.filter(
+            tasks={selectedTasks.filter(
               (subgoal: subTaskProps) => subgoal.phase === category
             )}
           />

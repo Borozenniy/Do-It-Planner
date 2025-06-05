@@ -8,6 +8,7 @@ import { Tooltip } from '../components/tooltip/tooltip';
 import { DragAndDropTip } from '../components/tips/drap-and-drop/drag-and-drop-tip';
 
 import { getGoals } from '../services/api/user';
+//import { getTasks } from '../services/api/subtask';
 
 import KanbanIcon from '../assets/icons/kanban.png';
 import MatrixIcon from '../assets/icons/matrix.png';
@@ -15,10 +16,11 @@ import CloseIcon from '../assets/icons/close.png';
 import './styles/planner-dashboard.scss';
 
 const PlannerDashboard = () => {
-  const { user } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
   //const [choosedMode, setChoosedMode] = useState<string>('');
   const [goals, setGoals] = useState<any[]>([]);
   const [selectedGoal, setSelectedGoal] = useState<any>();
+  //const [tasks, setTasks] = useState<any[]>([]);
   const [mode, setMode] = useState<'kanban' | 'eisenhower' | 'none'>('none');
   const dragAndDropTip = localStorage.getItem('dragAndDropTip');
   //const [selectedGoalId, setSelectedGoal] = useState<any>('');
@@ -80,16 +82,28 @@ const PlannerDashboard = () => {
   };
 
   const fetchGoals = async () => {
-    const goalsData = await getGoals(user);
+    const token = await getAccessTokenSilently({
+      detailedResponse: false,
+    });
+    const goalsData = await getGoals(token);
     if (goalsData.length > 0) {
       setGoals(goalsData);
     }
   };
 
-  const handleSelectGoal = (id: number) => {
+  //const fetchTasks = async (id: string) => {
+  //  const token = await getAccessTokenSilently({
+  //    detailedResponse: false,
+  //  });
+  //  const tasksData = await getTasks(token, id);
+  //  setTasks(tasksData);
+  //};
+
+  const handleSelectGoal = (id: string) => {
     const goal = goals.filter((goal) => goal.id === id);
     if (goal.length > 0) {
       setSelectedGoal(goal[0]);
+      //fetchTasks(id);
     }
   };
 
@@ -120,7 +134,7 @@ const PlannerDashboard = () => {
                 </label>
                 <select
                   id='goal'
-                  onChange={(e) => handleSelectGoal(parseInt(e.target.value))}
+                  onChange={(e) => handleSelectGoal(e.target.value)}
                   value={selectedGoal || ''}
                 >
                   <option value='' disabled></option>

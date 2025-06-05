@@ -17,40 +17,54 @@ const Root = () => {
   const createAccount = async () => {
     if (!user) return;
 
-    try {
-      const token = await getAccessTokenSilently(); // token
-      console.log('Token:', token);
+    const token = await getAccessTokenSilently({
+      detailedResponse: false,
+    });
 
-      const response = await fetch(`http://localhost:3000/users/${user.sub}`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    const userData = {
+      name: user?.name,
+      email: user?.email,
+      createdDate: Date.now(),
+    };
 
-      if (response.status === 404) {
-        await fetch(`http://localhost:3000/users`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            id: user.sub,
-            name: user.name,
-            email: user.email,
-          }),
-        });
-      }
-    } catch (error) {
-      console.error('Error checking/creating user:', error);
-    }
+    await createUser(token, userData);
+    //try {
+    //  // token
+    //  const token = await getAccessTokenSilently({
+    //    detailedResponse: false,
+    //  });
+
+    //  console.log('Token:', token);
+
+    //  const response = await fetch(`http://localhost:3000/user/user`, {
+    //    method: 'POST',
+    //    headers: {
+    //      Authorization: `Bearer ${token}`,
+    //    },
+    //  });
+
+    //  if (response.status === 404) {
+    //    await fetch(`http://localhost:3000/user/user`, {
+    //      method: 'POST',
+    //      headers: {
+    //        'Content-Type': 'application/json',
+    //        Authorization: `Bearer ${token}`,
+    //      },
+    //      body: JSON.stringify({
+    //        id: user.sub,
+    //        name: user.name,
+    //        email: user.email,
+    //      }),
+    //    });
+    //  }
+    //} catch (error) {
+    //  console.error('Error checking/creating user:', error);
+    //}
     //const userData = {
     //  name: user?.name,
     //  email: user?.email,
     //  createdDate: Date.now(),
     //};
-    //await createUser(userData);
   };
 
   useEffect(() => {

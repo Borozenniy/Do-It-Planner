@@ -13,6 +13,7 @@ import './index.css';
 
 const domainURL = import.meta.env.VITE_DOMAIN;
 const clientID = import.meta.env.VITE_CLIENT_ID;
+const audience = import.meta.env.AUDIENCE;
 
 const Dashboard = React.lazy(() => import('./pages/dashboard.tsx'));
 //const GoalsDashboard = React.lazy(() => import('./pages/goals-dashboard.tsx'));
@@ -28,6 +29,8 @@ const Auth0ProviderLayour = ({ children }: { children: React.ReactNode }) => {
       clientId={clientID}
       authorizationParams={{
         redirect_uri: window.location.origin + '/app',
+        audience: 'https://do-it-planner.vercel.app/app/dashboard',
+        //audience: audience,
       }}
     >
       {children}
@@ -37,19 +40,6 @@ const Auth0ProviderLayour = ({ children }: { children: React.ReactNode }) => {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    {/*<Auth0Provider
-      domain='dev-761rd8ygardisai0.us.auth0.com'
-      clientId='IwpkX4iX42XlPjgfSJjR7VFi9yaiuRHr'
-      authorizationParams={{
-        redirect_uri: window.location.origin,
-      }}
-    >
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<App />} />
-        </Routes>
-      </BrowserRouter>
-    </Auth0Provider>*/}
     <Auth0ProviderLayour>
       <BrowserRouter>
         <Routes>

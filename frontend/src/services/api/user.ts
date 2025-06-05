@@ -2,7 +2,7 @@
 
 //export const createUser = async (user: any) => {
 //  try {
-//    const response = await fetch(`${BASE_URL}/user/create-user`, {
+//    const response = await fetch(`${BASE_URL}/user`, {
 //      method: 'POST',
 //      headers: {
 //        'Content-Type': 'application/json',
@@ -116,22 +116,23 @@
 
 // LOCALHOST------------------------------------//
 
-export const createUser = async (user: any) => {
+export const createUser = async (token: string, userData: any) => {
   try {
-    const response = await fetch('http://localhost:3000/user/create-user', {
+    const response = await fetch('http://localhost:3000/user', {
       method: 'POST',
       headers: {
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(userData),
     });
 
     //if (!response.ok) {
     //  throw new Error('Помилка створення користувача');
     //}
 
-    const data = await response.json();
-    console.log('Користувач створений:', data);
+    //const data = await response.json();
+    //console.log('Користувач створений:', data);
   } catch (error) {
     if (error instanceof Error) {
       console.error('Помилка:', error.message);
@@ -141,20 +142,18 @@ export const createUser = async (user: any) => {
   }
 };
 
-export const getGoals = async (user: any) => {
+export const getGoals = async (token: string) => {
   try {
-    const response = await fetch(
-      `http://localhost:3000/goal/get-goals?email=${user.email}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        //credentials: 'include',
-      }
-    );
+    const response = await fetch('http://localhost:3000/goals', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      //credentials: 'include',
+    });
     const data = await response.json();
-    console.log('Goals:', data);
+    //console.log('Goals:', data);
     return data;
   } catch (error) {
     if (error instanceof Error) {
@@ -165,11 +164,12 @@ export const getGoals = async (user: any) => {
   }
 };
 
-export const createGoal = async (goal: unknown) => {
+export const createGoal = async (token: string, goal: unknown) => {
   try {
-    const response = await fetch('http://localhost:3000/goal/create-goal', {
+    const response = await fetch('http://localhost:3000/goal', {
       method: 'POST',
       headers: {
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(goal),
@@ -187,14 +187,15 @@ export const createGoal = async (goal: unknown) => {
   }
 };
 
-export const deleteGoal = async (goal: any) => {
+export const deleteGoal = async (token: string, goalId: string) => {
   try {
-    const response = await fetch('http://localhost:3000/goal/delete-goal', {
+    const response = await fetch(`http://localhost:3000/goal/${goalId}`, {
       method: 'DELETE',
       headers: {
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email: goal?.email, id: goal.id }),
+      //body: JSON.stringify({ email: goal?.email, id: goal.id }),
     });
     console.log('Delete goal response:', response);
   } catch (error) {
@@ -206,22 +207,22 @@ export const deleteGoal = async (goal: any) => {
   }
 };
 
-export const changeGoalMode = async (goal: any) => {
+export const changeGoalMode = async (
+  token: string,
+  goalId: string,
+  mode: string
+) => {
   try {
-    const response = await fetch(
-      'http://localhost:3000/goal/change-goal-mode',
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: goal?.email,
-          goalId: goal.id,
-          mode: goal.mode,
-        }),
-      }
-    );
+    const response = await fetch(`http://localhost:3000/goal/${goalId}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        mode: mode,
+      }),
+    });
 
     const result = await response.json();
     return result;

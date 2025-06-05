@@ -66,7 +66,7 @@
   &__input {
     display: flex;
     flex-direction: column;
-    padding: 5px;
+    padding: 10px;
     &--glowing {
       border-radius: 8px;
       animation: glowing-animation 2s ease-in-out infinite;
@@ -92,7 +92,7 @@
   }
 
   &__title {
-    font-size: 24px;
+    font-size: 30px;
     margin-right: 10px;
   }
 

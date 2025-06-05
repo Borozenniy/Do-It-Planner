@@ -7,11 +7,15 @@ import { ModalContext } from '../modal/modal-provider';
 import { AddSubtask } from '../modals/add-subtask/add-subtask';
 import { DeleteSubtask } from '../modals/delete-subtask/delete-subtask';
 import { AddToastType } from '../toasts/types';
-import { getGoals } from '../../services/api/user';
 import { SubtaskPriority } from '../subtask-priority/subtask-priority';
 import { Tooltip } from '../tooltip/tooltip';
 
-import { changeSubtaskPhase, removeSubtask } from '../../services/api/subtask';
+import { getGoals } from '../../services/api/user';
+import {
+  changeSubtaskPhase,
+  removeSubtask,
+  getTasks,
+} from '../../services/api/subtask';
 
 import { GoalProps } from '../goals/goal/goal';
 
@@ -31,11 +35,11 @@ export type subTaskProps = {
   title: string;
   phase: 'to do' | 'in progress' | 'done';
   priority: 'no priority' | 'low' | 'medium' | 'high';
-  id: number;
+  id: string;
 };
 
-const Kanban = ({ selectedGoal, setSelectedGoal }: any) => {
-  const { user } = useAuth0();
+const Kanban = ({ selectedGoal, setSelectedGoal, tasks }: any) => {
+  const { user, getAccessTokenSilently } = useAuth0();
   const [subTasks, setSubTasks] = useState<subTaskProps[]>([]);
   const { openModal, closeModal } = useContext(ModalContext) as any;
   const { addToast } = useContext(ToastContext) as AddToastType;
@@ -90,6 +94,16 @@ const Kanban = ({ selectedGoal, setSelectedGoal }: any) => {
     }
   };
 
+  const fetchTasks = async (id: string) => {
+    const token = await getAccessTokenSilently({
+      detailedResponse: false,
+    });
+    const result = await getTasks(token, id);
+    if (result.status === 'success') {
+      setSubTasks(result.tasks);
+    }
+  };
+
   const handleDeleteSubtask = (subTask: subTaskProps) => {
     openModal(
       <DeleteSubtask
@@ -100,12 +114,15 @@ const Kanban = ({ selectedGoal, setSelectedGoal }: any) => {
   };
 
   const deleteSubTask = async (subTask: subTaskProps) => {
-    const subtaskData = {
-      email: user?.email,
-      goalId: selectedGoal.id,
-      subgoalId: subTask.id,
-    };
-    const result = await removeSubtask(subtaskData);
+    const token = await getAccessTokenSilently({
+      detailedResponse: false,
+    });
+    //const subtaskData = {
+    //  email: user?.email,
+    //  goalId: selectedGoal.id,
+    //  subgoalId: subTask.id,
+    //};
+    const result = await removeSubtask(token, selectedGoal.id, subTask.id);
     if (result.status === 'success') {
       updateGoal();
       removeSubtaskSuccessToast();
@@ -116,12 +133,16 @@ const Kanban = ({ selectedGoal, setSelectedGoal }: any) => {
   };
 
   const updateGoal = async () => {
-    const goalsData = await getGoals(user);
+    const token = await getAccessTokenSilently({
+      detailedResponse: false,
+    });
+    const goalsData = await getGoals(token);
     const goal = goalsData.filter(
       (goal: GoalProps) => goal.id === selectedGoal.id
     );
     if (goal.length > 0) {
       setSelectedGoal(goal[0]);
+      fetchTasks(selectedGoal.id);
     }
   };
 
@@ -141,27 +162,27 @@ const Kanban = ({ selectedGoal, setSelectedGoal }: any) => {
   };
 
   const handleChangeSubtaskPhase = async (
-    subtaskId: number,
+    subtaskId: string,
     phase: subTaskProps['phase']
   ) => {
-    const subtaskData = {
-      email: user?.email,
-      goalId: selectedGoal.id,
-      subgoalId: subtaskId,
+    const token = await getAccessTokenSilently({
+      detailedResponse: false,
+    });
+    const taskData = {
+      id: subtaskId,
       phase: phase,
     };
-    const result = await changeSubtaskPhase(subtaskData);
-    console.log(result.status);
+    const result = await changeSubtaskPhase(token, selectedGoal.id, taskData);
     if (result.status === 'success') {
       updateGoal();
     } else {
-      console.log(result);
+      //console.log(result);
     }
   };
 
   const handleDragStart = (
     event: React.DragEvent<HTMLDivElement>,
-    subtaskId: number
+    subtaskId: string
   ) => {
     event.dataTransfer.setData('subTaskId', subtaskId.toString());
   };
@@ -170,7 +191,7 @@ const Kanban = ({ selectedGoal, setSelectedGoal }: any) => {
     event: React.DragEvent<HTMLDivElement>,
     phase: subTaskProps['phase']
   ) => {
-    const taskId = parseInt(event.dataTransfer.getData('subTaskId'), 10);
+    const taskId = event.dataTransfer.getData('subTaskId');
     setSubTasks((prevSubTasks) =>
       prevSubTasks.map((subtask) =>
         subtask.id === taskId ? { ...subtask, phase } : subtask
@@ -184,22 +205,32 @@ const Kanban = ({ selectedGoal, setSelectedGoal }: any) => {
   };
 
   const handleAddSubTask = () => {
-    console.log(selectedGoal);
-    if (selectedGoal) {
+    if (selectedGoal.id) {
       openModal(
         <AddSubtask
           setSelectedGoal={setSelectedGoal}
           goalId={selectedGoal.id}
+          mode={'kanban'}
         />
       );
     }
   };
 
+  //useEffect(() => {
+  //  if (selectedGoal.id) {
+  //    //fetchTasks(selectedGoal.id);
+  //    //setSubTasks(tasks)
+  //  }
+  //}, [selectedGoal]);
   useEffect(() => {
-    if (selectedGoal?.subgoals) {
-      setSubTasks(selectedGoal.subgoals);
+    if (selectedGoal.id) {
+      fetchTasks(selectedGoal.id);
     }
-  }, [selectedGoal]);
+  }, [selectedGoal, setSelectedGoal]);
+
+  //useEffect(() => {
+  //  setSubTasks(tasks);
+  //}, [tasks]);
 
   return (
     <div className='kanban'>
@@ -217,7 +248,7 @@ const Kanban = ({ selectedGoal, setSelectedGoal }: any) => {
                 {phase === 'to do' && (
                   <Button
                     img={AddIcon}
-                    label='Add subgoal'
+                    label='Add task'
                     imgPosition='left'
                     size='small'
                     onClick={() => handleAddSubTask()}

@@ -1,9 +1,12 @@
 import { auth } from 'express-oauth2-jwt-bearer';
 import 'dotenv/config';
 
+const audience = process.env.ALLOWED_AUDIENCE;
+const issuer = process.env.ISSUER_BASE_URL;
+
 const jwtCheck = auth({
-  audience: 'https://do-it-planner.vercel.app/app/dashboard',
-  issuerBaseURL: 'https://dev-761rd8ygardisai0.us.auth0.com/',
+  audience: audience,
+  issuerBaseURL: issuer,
   tokenSigningAlg: 'RS256',
 });
 

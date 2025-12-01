@@ -35,7 +35,7 @@ const GoalsList = ({
               key={goal.id}
               goal={goal}
               removeGoal={removeGoal}
-              progressbar={goal.progressbar}
+              progressBar={goal.progressBar}
               isActive={selectedGoal?.id === goal.id}
               onClick={() => setSelectedGoal(goal)}
               highPriority={goal.highPriority}

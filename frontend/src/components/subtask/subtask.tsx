@@ -55,7 +55,11 @@ const Subtask = ({
         }}
       >
         {subtask.priority && SubtaskPriority({ priority: subtask.priority })}
-        <div>{getDate(subtask.id).day + ' ' + getDate(subtask.id).month}</div>
+        <div>
+          {getDate(subtask.updatedAt).day +
+            ' ' +
+            getDate(subtask.updatedAt).month}
+        </div>
         <div className='subtask__buttons'>
           {subtask.phase !== 'to do' && (
             <Button

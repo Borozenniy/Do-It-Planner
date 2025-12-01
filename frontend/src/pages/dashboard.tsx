@@ -78,7 +78,7 @@ const Dashboard = () => {
     //  id: selectedGoal?.id,
     //  mode: manageMode,
     //};
-    console.log(id, manageMode);
+    //console.log(id, manageMode);
     const result = await changeGoalMode(token, id, manageMode);
     if (result.status === 'success') {
       fetchGoals();
@@ -173,7 +173,7 @@ const Dashboard = () => {
                       key={goal.id}
                       goal={goal}
                       removeGoal={removeGoal}
-                      progressbar={goal.progressbar}
+                      progressbar={goal.progressBar}
                       isActive={selectedGoal?.id === goal.id}
                       onClick={() => handleSelectGoal(goal)}
                       highPriority={goal.highPriority}
@@ -190,7 +190,7 @@ const Dashboard = () => {
                           key={goal.id}
                           goal={goal}
                           highPriority={true}
-                          progressbar={goal.progressbar}
+                          progressbar={goal.progressBar}
                           removeGoal={removeGoal}
                           isActive={selectedGoal?.id === goal.id}
                           onClick={() => handleSelectGoal(goal)}
@@ -208,7 +208,7 @@ const Dashboard = () => {
                       goal={goal}
                       removeGoal={removeGoal}
                       highPriority={goal.highPriority}
-                      progressbar={goal.progressbar}
+                      progressbar={goal.progressBar}
                       isActive={selectedGoal?.id === goal.id}
                       onClick={() => handleSelectGoal(goal)}
                     />

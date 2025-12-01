@@ -82,6 +82,9 @@
     position: absolute;
     top: 0;
     right: 5px;
+    z-index: 99;
+    width: 89px;
+    height: 100px;
   }
 
   &__buttons {

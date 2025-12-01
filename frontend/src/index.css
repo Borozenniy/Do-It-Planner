@@ -22,7 +22,7 @@ body {
 .layout {
   display: grid;
   grid-template-areas: 'sidebar content';
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 200px 1fr;
   transition: all 0.25s ease-in;
   grid-template-rows: auto;
   width: 100vw;
@@ -42,23 +42,6 @@ p {
 
 a {
   text-decoration: inherit;
-}
-a:hover {
-  border-radius: 12px;
-  /*padding: 5px;*/
-  /*color: var(--dust);*/
-  /*background-color: var(--secondary);*/
-  background: linear-gradient(to right, var(--primary), var(--primary-20));
-  box-shadow: 2px 2px 3px 1px var(--border-color);
-}
-a:active {
-  /*background-color: var(--primary);*/
-  background: linear-gradient(to right, var(--primary), var(--primary-40));
-}
-
-a:focus {
-  border-radius: 12px;
-  background-color: var(--secondary);
 }
 
 body {
@@ -109,7 +92,6 @@ button:focus {
   box-shadow: none;
 }
 
-/* Загальний стиль скролбару */
 ::-webkit-scrollbar {
   width: 3px; /* Ширина вертикального скролбару */
   height: 10px; /* Висота горизонтального скролбару */

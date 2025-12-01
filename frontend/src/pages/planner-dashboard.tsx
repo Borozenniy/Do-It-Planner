@@ -173,9 +173,9 @@ const PlannerDashboard = () => {
               <div className='planner-dashboard__modifications'>
                 <div className='planner-dashboard__title'>
                   {mode === 'none' ? (
-                    <span>Pick manage style:</span>
+                    <span>Pick manage style</span>
                   ) : (
-                    <span>Manage style:</span>
+                    <span>Manage style</span>
                   )}
                 </div>
                 <div className='planner-dashboard__buttons'>

@@ -23,7 +23,7 @@ export type GoalProps = {
   onClick?: any;
   highPriority: boolean;
   isActive?: boolean;
-  progressbar?: boolean;
+  progressBar?: boolean;
   subgoals?: any[];
   mode?: 'kanban' | 'eisenhower' | 'none';
 };
@@ -34,7 +34,7 @@ const Goal = ({
   onClick,
   highPriority = false,
   isActive = false,
-  progressbar = false,
+  progressBar = false,
 }: GoalProps) => {
   const { openModal, closeModal } = useContext(ModalContext) as any;
   const deleteGoal = () => {
@@ -84,7 +84,7 @@ const Goal = ({
       onClick={onClick}
     >
       <div className='goal__content'>
-        {progressbar && (
+        {progressBar && (
           <div className='goal__progress-bar'>
             <Tooltip
               label={`${progressBarValueInPercent()}%`}
@@ -103,7 +103,11 @@ const Goal = ({
         <div className='goal__info'>
           <div className='goal__indicators'>
             <div className='goal__date'>
-              <p>{getDate(goal.id).day + ' ' + getDate(goal.id).month} </p>{' '}
+              <p>
+                {getDate(goal.createdAt).day +
+                  ' ' +
+                  getDate(goal.createdAt).month}{' '}
+              </p>{' '}
             </div>
             {goal.mode !== 'none' && (
               <Tooltip

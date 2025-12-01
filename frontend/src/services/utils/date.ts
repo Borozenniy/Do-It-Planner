@@ -1,4 +1,4 @@
-export const getDate = (date: number) => {
+const getDate = (date: number) => {
   const givenDate = new Date(date);
   const day = givenDate.getDate();
   const month = givenDate.getMonth() + 1;
@@ -21,3 +21,5 @@ export const getDate = (date: number) => {
 
   return { day, month: months[month - 1], year };
 };
+
+export { getDate };

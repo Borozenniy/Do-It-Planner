@@ -84,7 +84,7 @@ const Goal = ({
       onClick={onClick}
     >
       <div className='goal__content'>
-        {progressBar && (
+        {/*{progressBar && (
           <div className='goal__progress-bar'>
             <Tooltip
               label={`${progressBarValueInPercent()}%`}
@@ -96,7 +96,7 @@ const Goal = ({
               />
             </Tooltip>
           </div>
-        )}
+        )}*/}
         <div className='goal__title'>
           <p className='goal__text'>{goal.name}</p>
         </div>

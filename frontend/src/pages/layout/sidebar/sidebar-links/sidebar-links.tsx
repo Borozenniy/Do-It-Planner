@@ -21,8 +21,6 @@ const SidebarLinks = ({ isSidebarClosed, currentTheme }: SidebarLinksProps) => {
 
   const showAddGoalTip = localStorage.getItem('addGoalTip') !== 'showed';
 
-  console.log(location.pathname === '/app/goals');
-
   useEffect(() => {
     if (location.pathname === '/app/dashboard' && showAddGoalTip) {
       setAddGoalTip(true);

@@ -1,0 +1,27 @@
+/** @type {import("stylelint").Config} */
+export default {
+  extends: ['stylelint-config-standard-scss'],
+  rules: {
+    'max-nesting-depth': 3,
+    'media-type-no-deprecated': true,
+    'declaration-block-no-duplicate-properties': true,
+    'no-duplicate-at-import-rules': true,
+    'comment-no-empty': true,
+    'named-grid-areas-no-invalid': true,
+    'custom-property-no-missing-var-function': true,
+    'no-irregular-whitespace': true,
+    'declaration-block-no-shorthand-property-overrides': true,
+    'annotation-no-unknown': true,
+    'at-rule-descriptor-no-unkown': true,
+    'at-rule-descriptor-value-no-unkown': true,
+    'function-no-unknown': true,
+    'property-no-unknown': true,
+    'unit-no-unknown': true,
+    'color-named': 'always-where-possible',
+    'length-zero-no-unit': true,
+    'function-name-case': 'lower',
+    'value-keyword-case': 'lower',
+    'declaration-block-single-line-max-declarations': 1,
+    'number-max-precision': 3,
+  },
+};

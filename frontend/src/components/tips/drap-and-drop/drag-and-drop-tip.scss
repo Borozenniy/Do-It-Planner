@@ -18,9 +18,8 @@
     animation: fadeout 0.3s ease-in;
   }
 
-  //background-color: red;
   &__container {
-    width: 250px;
+    width: 260px;
     gap: 10px;
     padding: 20px 10px 10px;
     background-color: var(--surface-20);
@@ -28,7 +27,6 @@
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
     animation: glowing 2s ease-in-out infinite;
-    //z-index: 100;
     button {
       margin-top: 10px;
     }
